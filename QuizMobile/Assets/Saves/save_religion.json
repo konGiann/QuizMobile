@@ -1,0 +1,256 @@
+{
+    "list": [{
+            "Text": "Σε ποια μεγάλη γιορτή βγαίνει από τη σπηλιά του ο Πέτρος Γαϊτάνος;",
+            "Image": {
+                "instanceID": 0
+            },
+            "Answers": [{
+                    "text": "Κοίμησης της Θεοτόκου",
+                    "isCorrect": false
+                },
+                {
+                    "text": "Τα Θεοφάνεια",
+                    "isCorrect": false
+                },
+                {
+                    "text": "Το Πάσχα",
+                    "isCorrect": true
+                },
+                {
+                    "text": "28η Οκτωβρίου",
+                    "isCorrect": false
+                }
+            ]
+        },
+        {
+            "Text": "Πού βρίσκεται ο ναός του Δία;",
+            "Image": {
+                "instanceID": 0
+            },
+            "Answers": [{
+                    "text": "Στην Ολυμπία",
+                    "isCorrect": true
+                },
+                {
+                    "text": "Στον Όλυμπο",
+                    "isCorrect": false
+                },
+                {
+                    "text": "Στη Σάμο",
+                    "isCorrect": false
+                },
+                {
+                    "text": "Στη Σαμοθράκη",
+                    "isCorrect": false
+                }
+            ]
+        },
+        {
+            "Text": "Ποιος είναι ο προστάτης των οδοντοτριάτρων;",
+            "Image": {
+                "instanceID": 0
+            },
+            "Answers": [{
+                    "text": "ο Άγιος Αντύπας",
+                    "isCorrect": true
+                },
+                {
+                    "text": "ο Άγιος Μητροπάνος",
+                    "isCorrect": false
+                },
+                {
+                    "text": "ο Άγιος Γεώργιος ο οδοντοτεχνίτης",
+                    "isCorrect": false
+                },
+                {
+                    "text": "η Αγία Αναστασία η φαρμακολύτρια",
+                    "isCorrect": false
+                }
+            ]
+        },
+        {
+            "Text": "Ποιος είναι ο προστάτης των πτηνοτρόφων και των αμπελουργών;",
+            "Image": {
+                "instanceID": 0
+            },
+            "Answers": [{
+                    "text": "Ο Άγιος Σαμψών",
+                    "isCorrect": false
+                },
+                {
+                    "text": "Ο Άγιος Τρύφων",
+                    "isCorrect": true
+                },
+                {
+                    "text": "Η Παναγία η Αμπελοκρατούσα",
+                    "isCorrect": false
+                },
+                {
+                    "text": "Η Παναγία των Παρισίων",
+                    "isCorrect": false
+                }
+            ]
+        },
+        {
+            "Text": "Πόσα χέρια έχει η Ινδή θεά Κάλι",
+            "Image": {
+                "instanceID": 0
+            },
+            "Answers": [{
+                    "text": "45",
+                    "isCorrect": false
+                },
+                {
+                    "text": "6",
+                    "isCorrect": false
+                },
+                {
+                    "text": "10",
+                    "isCorrect": true
+                },
+                {
+                    "text": "Άπειρα",
+                    "isCorrect": false
+                }
+            ]
+        },
+        {
+            "Text": "Τί είναι το πετραχήλι;",
+            "Image": {
+                "instanceID": 0
+            },
+            "Answers": [{
+                    "text": "Ψάρι",
+                    "isCorrect": false
+                },
+                {
+                    "text": "Κόσμημα",
+                    "isCorrect": false
+                },
+                {
+                    "text": "Λειτουργικό άμφιο",
+                    "isCorrect": true
+                },
+                {
+                    "text": "Είδος θυμιατού",
+                    "isCorrect": false
+                }
+            ]
+        },
+        {
+            "Text": "Τί είναι ο ποντίφικας;",
+            "Image": {
+                "instanceID": 0
+            },
+            "Answers": [{
+                    "text": "Ο Πάπας",
+                    "isCorrect": true
+                },
+                {
+                    "text": "Μεγάλος ποντικός",
+                    "isCorrect": false
+                },
+                {
+                    "text": "Ήρωας κόμικ",
+                    "isCorrect": false
+                },
+                {
+                    "text": "Δεν υπάρχει τέτοια λέξη!",
+                    "isCorrect": false
+                }
+            ]
+        },
+        {
+            "Text": "Τί θρήσκευμα έχουν οι κάτοικοι της Μάλτας;",
+            "Image": {
+                "instanceID": 0
+            },
+            "Answers": [{
+                    "text": "Σατανισμό",
+                    "isCorrect": false
+                },
+                {
+                    "text": "Ινδουισμό",
+                    "isCorrect": false
+                },
+                {
+                    "text": "Καθολικισμό",
+                    "isCorrect": true
+                },
+                {
+                    "text": "Ισλαμισμό",
+                    "isCorrect": false
+                }
+            ]
+        },
+        {
+            "Text": "Σε ποιες περιπτώσεις οι μουσουλμάνες γυναίκες φοράνε κνα στα χέρια τους;",
+            "Image": {
+                "instanceID": 0
+            },
+            "Answers": [{
+                    "text": "Όταν έχουν περίοδο",
+                    "isCorrect": false
+                },
+                {
+                    "text": "Όταν κάνει κρύο",
+                    "isCorrect": false
+                },
+                {
+                    "text": "Στο Ραμαζάνι και στο Μπαϊράμι",
+                    "isCorrect": false
+                },
+                {
+                    "text": "Σε γάμους και ονοματοδοτήσεις",
+                    "isCorrect": true
+                }
+            ]
+        },
+        {
+            "Text": "Ποιές τροφές απαγορεύονται κατά τη διάρκεια της χριστιανικής νηστείας;",
+            "Image": {
+                "instanceID": 0
+            },
+            "Answers": [{
+                    "text": "Γλυκά και κρεατικά",
+                    "isCorrect": false
+                },
+                {
+                    "text": "Σούσι και μίσο",
+                    "isCorrect": false
+                },
+                {
+                    "text": "Λάδι, αλκοόλ, κρέας και τα παράγωγά του",
+                    "isCorrect": true
+                },
+                {
+                    "text": "Όλες οι τροφές από αλλόθρησκους",
+                    "isCorrect": false
+                }
+            ]
+        },
+        {
+            "Text": "This is a loaded question",
+            "Image": {
+                "instanceID": 0
+            },
+            "Answers": [{
+                    "text": "Γλυκά και κρεατικά",
+                    "isCorrect": false
+                },
+                {
+                    "text": "Σούσι και μίσο",
+                    "isCorrect": false
+                },
+                {
+                    "text": "Λάδι, αλκοόλ, κρέας και τα παράγωγά του",
+                    "isCorrect": true
+                },
+                {
+                    "text": "Όλες οι τροφές από αλλόθρησκους",
+                    "isCorrect": false
+                }
+            ]
+        }
+    ]
+}
