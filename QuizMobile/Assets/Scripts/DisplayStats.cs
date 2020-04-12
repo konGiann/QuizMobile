@@ -2,6 +2,8 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using qm = Managers.QuestionManager;
+using gm = Managers.GameManager;
 
 public class DisplayStats : MonoBehaviour
 {
@@ -12,6 +14,9 @@ public class DisplayStats : MonoBehaviour
     public Text Grade;
 
     float percentage;
+
+    public delegate void OnCategoryRestart();
+    public static event OnCategoryRestart CategoryReplay;
     
     void Awake()
     {
@@ -56,9 +61,11 @@ public class DisplayStats : MonoBehaviour
         SuccessPercentage.text = percentage.ToString("n2") + "%";
     }
 
-    public void PlayAgain()
-    {
-        SceneManager.LoadScene(1);
+    public void TryCategoryAgain()
+    {        
+        SceneManager.LoadScene(2);        
+        gm._instance.currentState = GameState.Running;
+        CategoryReplay();
     }
 
     public void QuitApp()

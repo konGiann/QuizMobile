@@ -32,29 +32,40 @@ namespace Managers
         [Header("User selected Questions")]
         public List<Question> selectedQuestions;
 
+        public GameObject StatsCanvas;
+
+        // temp public
+        public List<Question>  questionPool;
+
+        public List<Question> easyQuestions;
+
         public int totalCorrectAnswers;
 
         public int totalQuestions;
+
+        public int answersGiven;
 
         #endregion
 
         #region fields        
 
-        private bool isQuestionAnswered;
+        [HideInInspector]
+        public bool isQuestionAnswered;
 
         private TimeManager tm;
 
         private Question currentQuestion;
 
         private Sprite defaultCategorySprite;
-
-        private List<Question> easyQuestions;
+        
         private List<Question> normalQuestions;
         private List<Question> hardQuestions;
-
+                
+        #region delegates
         public delegate void OnAnswer();
         public event OnAnswer onCorrectAnswer;
-        public event OnAnswer onWrongAnswer;
+        public event OnAnswer onWrongAnswer; 
+        #endregion
 
         #endregion
 
@@ -62,38 +73,48 @@ namespace Managers
         {
             if (_instance == null)
             {
-                _instance = GetComponent<QuestionManager>();
-            }
+               
+                _instance = this;
+            }            
 
-            tm = GetComponent<TimeManager>();
+            tm = FindObjectOfType<TimeManager>();
 
             tm.onTimeEnded += LostDueToTimer;
+            
 
             isQuestionAnswered = false;
-
-
+            answersGiven = 0;
+            //DisplayStats.CategoryReplay += SelectRandomQuestion;
         }
 
-        private void Update()
+        private void Start()
         {
-            tm.AnswerCountDown(isQuestionAnswered);
-        }
+            
+        }        
 
         public void SetSelectedCategory(string selectedCategory)
         {
             switch (selectedCategory)
             {
                 case "Religion":
-                    if (selectedQuestions == null || selectedQuestions.Count == 0)
-                    {
-                        selectedQuestions = religionQuestions.questionList.ToList();
-                        defaultCategorySprite = gm._instance.religionImage;
-                    }
+
+                    selectedQuestions = religionQuestions.questionList.ToList();
+                    
+                    if (gm._instance.currentDifficulty == QuestionDifficulty.EASY)
+                        questionPool = easyQuestions.ToList();
+                    easyQuestions = selectedQuestions.Where(x => x.Difficulty == QuestionDifficulty.EASY).ToList();
+                    normalQuestions = selectedQuestions.Where(x => x.Difficulty == QuestionDifficulty.NORMAL).ToList();
+                    hardQuestions = selectedQuestions.Where(x => x.Difficulty == QuestionDifficulty.HARD).ToList();
+                    defaultCategorySprite = gm._instance.religionImage;
+
                     break;
                 case "Culture":
                     if (selectedQuestions == null || selectedQuestions.Count == 0)
                     {
                         selectedQuestions = cultureQuestions.questionList.ToList();
+                        easyQuestions = selectedQuestions.Where(x => x.Difficulty == QuestionDifficulty.EASY).ToList();
+                        normalQuestions = selectedQuestions.Where(x => x.Difficulty == QuestionDifficulty.NORMAL).ToList();
+                        hardQuestions = selectedQuestions.Where(x => x.Difficulty == QuestionDifficulty.HARD).ToList();
                         defaultCategorySprite = gm._instance.cultureImage;
                     }
                     break;
@@ -101,6 +122,9 @@ namespace Managers
                     if (selectedQuestions == null || selectedQuestions.Count == 0)
                     {
                         selectedQuestions = natureQuestions.questionList.ToList();
+                        easyQuestions = selectedQuestions.Where(x => x.Difficulty == QuestionDifficulty.EASY).ToList();
+                        normalQuestions = selectedQuestions.Where(x => x.Difficulty == QuestionDifficulty.NORMAL).ToList();
+                        hardQuestions = selectedQuestions.Where(x => x.Difficulty == QuestionDifficulty.HARD).ToList();
                         defaultCategorySprite = gm._instance.natureImage;
                     }
                     break;
@@ -108,6 +132,9 @@ namespace Managers
                     if (selectedQuestions == null || selectedQuestions.Count == 0)
                     {
                         selectedQuestions = covidQuestions.questionList.ToList();
+                        easyQuestions = selectedQuestions.Where(x => x.Difficulty == QuestionDifficulty.EASY).ToList();
+                        normalQuestions = selectedQuestions.Where(x => x.Difficulty == QuestionDifficulty.NORMAL).ToList();
+                        hardQuestions = selectedQuestions.Where(x => x.Difficulty == QuestionDifficulty.HARD).ToList();
                         defaultCategorySprite = gm._instance.covidImage;
                     }
                     break;
@@ -119,27 +146,36 @@ namespace Managers
 
         private void LostDueToTimer()
         {
+            Debug.Log("lost");
             tm.timer = tm.timeForAnswer;
-            selectedQuestions.Remove(currentQuestion);
+            answersGiven++;
+
             int randomIndex = Random.Range(0, sm._instance.WrongAnswers.Length);
             sm._instance.audioController.PlayOneShot(sm._instance.WrongAnswers[randomIndex]);
             gui._instance.ResetButtonColors();
-            totalQuestions += 1;
+            
             gui._instance.UpdateAnswersScore(totalCorrectAnswers, totalQuestions);
             SelectRandomQuestion(gm._instance.currentDifficulty);
         }
 
         public void SelectRandomQuestion(QuestionDifficulty diff)
         {
-            if (selectedQuestions.Count(x => x.Difficulty == diff) != 0)
+            StatsCanvas.SetActive(false);
+            // check the total questions of the level
+            NumberOfQuestionsToAnswer();
+            
+            // if we can provide questions choose one
+            // else game over
+            if (answersGiven < totalQuestions)
             {
-                // filter questions by difficulty
-                var diffQuestions = selectedQuestions.Where(x => x.Difficulty == diff).ToList();
+                if (questionPool.Count() < (totalQuestions - answersGiven))
+                {                    
+                    questionPool = easyQuestions.ToList();                    
+                }
+                int randomIndex = Random.Range(0, questionPool.Count);
 
-                int randomIndex = Random.Range(0, diffQuestions.Count);
+                currentQuestion = questionPool[randomIndex];                           
 
-                currentQuestion = diffQuestions[randomIndex];
-                
                 gui._instance.QuestionText.text = currentQuestion.Text;
 
                 // assign question image
@@ -171,7 +207,7 @@ namespace Managers
                 // hide buttons that are not needed
                 if (numberOfAnswers != gui._instance.Answers.Length)
                 {
-                    for (int i = numberOfAnswers; i <= gui._instance.Answers.Length -1; i++)
+                    for (int i = numberOfAnswers; i <= gui._instance.Answers.Length - 1; i++)
                     {
                         gui._instance.Answers[i].gameObject.SetActive(false);
                     }
@@ -179,13 +215,19 @@ namespace Managers
             }
             else
             {
-                // load game over screen
-                SceneManager.LoadScene(3);
+                answersGiven = 0;
+                totalCorrectAnswers = 0;
+                gm._instance.currentState = GameState.GameOver;
+
+                StatsCanvas.SetActive(true);
+                //SceneManager.LoadScene(3);
             }
         }
 
         public void CheckAnswer()
         {
+            ++answersGiven;
+
             int correctIndex = -1;
 
             string name = EventSystem.current.currentSelectedGameObject.name;
@@ -202,6 +244,7 @@ namespace Managers
             // check user's answer
             if (name == correctIndex.ToString()) // correct
             {
+                questionPool.Remove(currentQuestion);
                 gui._instance.Answers[correctIndex].GetComponent<Image>().color = Color.green;
 
                 // play random effect
@@ -232,10 +275,10 @@ namespace Managers
                 int randomIndex = UnityEngine.Random.Range(0, sm._instance.WrongAnswers.Length);
                 sm._instance.audioController.PlayOneShot(sm._instance.WrongAnswers[randomIndex]);
                 onWrongAnswer();
-            }
-            totalQuestions++;
+            }            
 
             gui._instance.UpdateAnswersScore(totalCorrectAnswers, totalQuestions);
+
 
             StartCoroutine(GotoNextQuestionWithDelay(tm.nextQuestionDelay));
         }
@@ -243,8 +286,7 @@ namespace Managers
         IEnumerator GotoNextQuestionWithDelay(float delay)
         {
             isQuestionAnswered = true;
-            selectedQuestions.Remove(currentQuestion);
-
+            
             foreach (var button in gui._instance.Answers)
             {
                 button.interactable = false;
@@ -258,10 +300,51 @@ namespace Managers
             SelectRandomQuestion(gm._instance.currentDifficulty);
         }
 
-        private void OnDisable()
+        private void NumberOfQuestionsToAnswer()
         {
-            tm.onTimeEnded -= LostDueToTimer;
+            switch (gm._instance.player.level)
+            {
+                case 1:
+                case 2:
+                    totalQuestions = 8;
+                    break;
+                case 3:
+                case 4:
+                    totalQuestions = 10;
+                    break;
+                case 5:
+                case 6:
+                    totalQuestions = 12;
+                    break;
+                case 7:
+                    totalQuestions = 14;
+                    break;
+                case 8:
+                case 9:
+                    totalQuestions = 16;
+                    break;
+                case 10:
+                case 11:
+                    totalQuestions = 18;
+                    break;
+                case 12:
+                case 13:
+                    totalQuestions = 20;
+                    break;
+                case 14:
+                    totalQuestions = 22;
+                    break;
+                case 15:
+                    totalQuestions = 25;
+                    break;                                    
+                default:
+                    break;
+            }
         }
 
+        private void OnDisable()
+        {
+            //DisplayStats.CategoryReplay -= SelectRandomQuestion;
+        }
     }
 }

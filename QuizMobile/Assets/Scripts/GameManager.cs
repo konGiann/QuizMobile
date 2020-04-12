@@ -3,12 +3,13 @@ using menu = Managers.MenuManager;
 using qm = Managers.QuestionManager;
 using gui = Managers.GuiManager;
 using System;
+using UnityEngine.SceneManagement;
 
 namespace Managers
 {
-    public class GameManager : MonoBehaviour
+    public class GameManager : Singleton<GameManager>
     {
-        public static GameManager _instance;
+        //public static GameManager _instance ;
 
         #region inspector fields
 
@@ -41,11 +42,15 @@ namespace Managers
 
         private void Awake()
         {
-            if (_instance == null)
-            {
-                _instance = GetComponent<GameManager>();
-            }
-
+            //if (_instance == null)
+            //{               
+            //    _instance = this;
+            //}
+            //else
+            //{
+                
+            //}
+            
             // reset score and set highscore
             PlayerPrefmanager.ResetStats();
             highScore = PlayerPrefmanager.GetHighScore();
@@ -54,8 +59,11 @@ namespace Managers
 
             qm._instance.onCorrectAnswer += IncreaseScore;
 
-            qm._instance.onWrongAnswer += WhatToDO;
-            
+            qm._instance.onWrongAnswer += ReduceLifes;
+
+            // replay
+            DisplayStats.CategoryReplay += StartQuestions;
+
             InitPlayer();
         }
 
@@ -63,7 +71,7 @@ namespace Managers
         {
             player = new PlayerProfile
             {
-                level = 11,
+                level = 1,
                 score = 0
             };
         }
@@ -71,6 +79,11 @@ namespace Managers
         private void Start()
         {
             CheckDifficulty();
+            StartQuestions();
+        }
+
+        private void StartQuestions()
+        {
             qm._instance.SelectRandomQuestion(currentDifficulty);
         }
 
@@ -95,6 +108,7 @@ namespace Managers
                     PauseGame();
                     break;
                 case GameState.GameOver:
+                    //LoadGameOverScreen();
                     break;
                 default:
                     break;
@@ -110,6 +124,11 @@ namespace Managers
         {
             Time.timeScale = 1;
             currentState = GameState.Running;
+        }
+
+        private void LoadGameOverScreen()
+        {
+            SceneManager.LoadScene(3);
         }
 
 
@@ -129,7 +148,7 @@ namespace Managers
             }
         }
 
-        private void WhatToDO()
+        private void ReduceLifes()
         {
             //
         }

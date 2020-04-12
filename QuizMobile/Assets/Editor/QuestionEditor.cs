@@ -107,20 +107,29 @@ public class QuestionEditor : EditorWindow
 
             if (GUILayout.Button("Προσθήκη ερώτησης", GUILayout.ExpandWidth(false)))
             {
-                if (!Array.Exists(questionList.questionList[viewIndex - 1].Answers, element => element.isCorrect == true) ||
-                    questionList.questionList[viewIndex - 1].Answers.Count(x => x.isCorrect == true) > 1)
+                if(questionList.questionList.Count > 0)
                 {
-                    EditorUtility.DisplayDialog("Ουπς!", "Σημείωσε τουλάχιστον μια σωστή απάντηση και όχι παραπάνω!", "OK");
+                    if (!Array.Exists(questionList.questionList[viewIndex - 1].Answers, element => element.isCorrect == true) ||
+                    questionList.questionList[viewIndex - 1].Answers.Count(x => x.isCorrect == true) > 1)
+                    {
+                        EditorUtility.DisplayDialog("Ουπς!", "Σημείωσε τουλάχιστον μια σωστή απάντηση και όχι παραπάνω!", "OK");
+                    }
+                    else
+                    {
+                        AddItem();
+                    }
                 }
                 else
                 {
                     AddItem();
-                }
-                
+                }                                
             }
             if (GUILayout.Button("Διαγραφή ερώτησης", GUILayout.ExpandWidth(false)))
             {
-                DeleteItem(viewIndex - 1);
+                if (questionList.questionList.Count > 0)
+                {
+                    DeleteItem(viewIndex - 1); 
+                }
             }
 
             // show list  asset name

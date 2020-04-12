@@ -21,8 +21,15 @@ namespace Managers
         {
             if (_instance == null)
             {
-                _instance = GetComponent<GuiManager>();
+                _instance = this;
             }
+
+            //else if (_instance != null)
+            //{
+            //    Destroy(gameObject);
+            //}
+
+            //DontDestroyOnLoad(gameObject);
 
             // initialize score values
             CorrectAnswersScore.text = "0";

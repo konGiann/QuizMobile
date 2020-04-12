@@ -24,6 +24,16 @@ namespace Managers
 
         #endregion
 
+        private void Awake()
+        {
+            timer = timeForAnswer;
+        }
+
+        private void Update()
+        {
+            AnswerCountDown(QuestionManager._instance.isQuestionAnswered);
+        }
+
         public void AnswerCountDown(bool isQuestionAnswered)
         {
             if (!isQuestionAnswered)
