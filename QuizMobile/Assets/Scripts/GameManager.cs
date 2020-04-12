@@ -1,9 +1,8 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
+using gui = Managers.GuiManager;
 using menu = Managers.MenuManager;
 using qm = Managers.QuestionManager;
-using gui = Managers.GuiManager;
-using System;
-using UnityEngine.SceneManagement;
 
 namespace Managers
 {
@@ -24,7 +23,7 @@ namespace Managers
 
         public QuestionDifficulty currentDifficulty;
 
-        public PlayerProfile player;
+        public PlayerProfile player;        
 
         public GameState currentState;
 
@@ -40,35 +39,38 @@ namespace Managers
 
         #endregion
 
-        private void Awake()
+        protected override void Awake()
         {
-            //if (_instance == null)
-            //{               
-            //    _instance = this;
-            //}
-            //else
-            //{
-                
-            //}
-            
+            base.Awake();
+                        
+            Init();
+        }
+
+        /// <summary>
+        /// Init fields and assign delegates
+        /// </summary>
+        private void Init()
+        {
             // reset score and set highscore
             PlayerPrefmanager.ResetStats();
             highScore = PlayerPrefmanager.GetHighScore();
+            
+            
 
-            qm._instance.SetSelectedCategory(menu._instance.selectedCategory);
+            #region events to look at
 
+            // increase score on correct answer
             qm._instance.onCorrectAnswer += IncreaseScore;
 
+            // reduce player lifes on wrong answer
             qm._instance.onWrongAnswer += ReduceLifes;
 
-            // replay
-            DisplayStats.CategoryReplay += StartQuestions;
+            // start question set again on failure
+            DisplayStats.TrySameQuestionSetAgain += StartQuestionSet;
 
-            InitPlayer();
-        }
+            #endregion
 
-        private void InitPlayer()
-        {
+            // init player
             player = new PlayerProfile
             {
                 level = 1,
@@ -79,41 +81,51 @@ namespace Managers
         private void Start()
         {
             CheckDifficulty();
-            StartQuestions();
+
+            // load question set of chosen category
+            qm._instance.SetSelectedCategory(menu._instance.selectedCategory, currentDifficulty);
+            Debug.Log("hi");
+            StartQuestionSet();
+        }
+        
+        private void Update()
+        {
+            //CheckGameState();
+            CheckDifficulty();
+
+            // check for ESC key to pause game
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                PauseGame();
+            }
         }
 
-        private void StartQuestions()
+        /// <summary>
+        /// start question set based on difficulty
+        /// </summary>
+        private void StartQuestionSet()
         {
+            TimeManager.timerIsPaused = false;
             qm._instance.SelectRandomQuestion(currentDifficulty);
         }
 
-        private void Update()
-        {
-            CheckGameState();
+        //private void CheckGameState()
+        //{
+        //    switch (currentState)
+        //    {
+        //        case GameState.Running:
 
-            if (Input.GetKeyDown(KeyCode.Escape))
-            {
-                currentState = GameState.Paused;
-            }
-        }
-
-        private void CheckGameState()
-        {
-            switch (currentState)
-            {
-                case GameState.Running:
-                    CheckDifficulty();
-                    break;
-                case GameState.Paused:
-                    PauseGame();
-                    break;
-                case GameState.GameOver:
-                    //LoadGameOverScreen();
-                    break;
-                default:
-                    break;
-            }
-        }
+        //            break;
+        //        case GameState.Paused:
+        //            PauseGame();
+        //            break;
+        //        case GameState.GameOver:
+        //            //LoadGameOverScreen();
+        //            break;
+        //        default:
+        //            break;
+        //    }
+        //}
 
         private void PauseGame()
         {
@@ -125,13 +137,11 @@ namespace Managers
             Time.timeScale = 1;
             currentState = GameState.Running;
         }
-
-        private void LoadGameOverScreen()
-        {
-            SceneManager.LoadScene(3);
-        }
-
-
+     
+        /// <summary>
+        /// Check game difficulty based on player level
+        /// we use that to assign the proper question set based on difficulty in the QuestionManager
+        /// </summary>
         private void CheckDifficulty()
         {
             if (player.level <= 5)

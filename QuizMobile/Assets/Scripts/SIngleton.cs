@@ -45,14 +45,23 @@ public abstract class Singleton<T> : MonoBehaviour where T : Component
     /// </summary>
     protected virtual void Awake()
     {
-        if (instance == null)
+        //if (instance == null)
+        //{
+        //    instance = this as T;
+        //    DontDestroyOnLoad(gameObject);
+        //}
+        //else
+        //{
+        //    Destroy(gameObject);
+        //}
+
+        if (instance != null && instance != this)
         {
-            instance = this as T;
-            DontDestroyOnLoad(gameObject);
+            Destroy(gameObject);
         }
         else
         {
-            Destroy(gameObject);
+            instance = this as T;
         }
     }
 

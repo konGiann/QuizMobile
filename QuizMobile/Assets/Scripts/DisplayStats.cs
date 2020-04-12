@@ -13,16 +13,16 @@ public class DisplayStats : MonoBehaviour
     public Text SuccessPercentage;
     public Text Grade;
 
-    float percentage;
+    private float percentage;
 
     public delegate void OnCategoryRestart();
-    public static event OnCategoryRestart CategoryReplay;
+    public static event OnCategoryRestart TrySameQuestionSetAgain;
     
     void Awake()
     {
         FinalScore.text = PlayerPrefmanager.GetScore().ToString();
         HighScore.text = PlayerPrefmanager.GetHighScore().ToString();
-        if (!GameManager._instance.hasNewHighscore)
+        if (!gm._instance.hasNewHighscore)
         {
             HasHighscore.gameObject.SetActive(false);
         }
@@ -63,9 +63,9 @@ public class DisplayStats : MonoBehaviour
 
     public void TryCategoryAgain()
     {        
-        SceneManager.LoadScene(2);        
+        //SceneManager.LoadScene(2);        
         gm._instance.currentState = GameState.Running;
-        CategoryReplay();
+        TrySameQuestionSetAgain();
     }
 
     public void QuitApp()

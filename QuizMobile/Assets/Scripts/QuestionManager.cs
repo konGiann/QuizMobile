@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using gui = Managers.GuiManager;
 using gm = Managers.GameManager;
+using gui = Managers.GuiManager;
 using sm = Managers.SoundManager;
 
 namespace Managers
@@ -36,9 +35,7 @@ namespace Managers
 
         // temp public
         public List<Question>  questionPool;
-
-        public List<Question> easyQuestions;
-
+        
         public int totalCorrectAnswers;
 
         public int totalQuestions;
@@ -54,13 +51,10 @@ namespace Managers
 
         private TimeManager tm;
 
-        private Question currentQuestion;
+        private Question currentQuestion;        
 
-        private Sprite defaultCategorySprite;
-        
-        private List<Question> normalQuestions;
-        private List<Question> hardQuestions;
-                
+        private Sprite defaultCategorySprite;                      
+
         #region delegates
         public delegate void OnAnswer();
         public event OnAnswer onCorrectAnswer;
@@ -71,40 +65,43 @@ namespace Managers
 
         private void Awake()
         {
+
+            Init();
+        }
+
+        /// <summary>
+        /// Init fields
+        /// </summary>
+        private void Init()
+        {
             if (_instance == null)
             {
-               
+
                 _instance = this;
-            }            
+            }
 
             tm = FindObjectOfType<TimeManager>();
 
             tm.onTimeEnded += LostDueToTimer;
-            
 
             isQuestionAnswered = false;
+
             answersGiven = 0;
-            //DisplayStats.CategoryReplay += SelectRandomQuestion;
         }
 
-        private void Start()
-        {
-            
-        }        
-
-        public void SetSelectedCategory(string selectedCategory)
+        /// <summary>
+        /// Check for wich category this question set is about
+        /// and load the appropriate questions based on the difficulty
+        /// </summary>
+        /// <param name="selectedCategory"></param>
+        public void SetSelectedCategory(string selectedCategory, QuestionDifficulty diff)
         {
             switch (selectedCategory)
             {
                 case "Religion":
 
                     selectedQuestions = religionQuestions.questionList.ToList();
-                    
-                    if (gm._instance.currentDifficulty == QuestionDifficulty.EASY)
-                        questionPool = easyQuestions.ToList();
-                    easyQuestions = selectedQuestions.Where(x => x.Difficulty == QuestionDifficulty.EASY).ToList();
-                    normalQuestions = selectedQuestions.Where(x => x.Difficulty == QuestionDifficulty.NORMAL).ToList();
-                    hardQuestions = selectedQuestions.Where(x => x.Difficulty == QuestionDifficulty.HARD).ToList();
+                    questionPool = selectedQuestions.Where(x => x.Difficulty == diff).ToList();
                     defaultCategorySprite = gm._instance.religionImage;
 
                     break;
@@ -112,9 +109,7 @@ namespace Managers
                     if (selectedQuestions == null || selectedQuestions.Count == 0)
                     {
                         selectedQuestions = cultureQuestions.questionList.ToList();
-                        easyQuestions = selectedQuestions.Where(x => x.Difficulty == QuestionDifficulty.EASY).ToList();
-                        normalQuestions = selectedQuestions.Where(x => x.Difficulty == QuestionDifficulty.NORMAL).ToList();
-                        hardQuestions = selectedQuestions.Where(x => x.Difficulty == QuestionDifficulty.HARD).ToList();
+                        questionPool = selectedQuestions.Where(x => x.Difficulty == diff).ToList();
                         defaultCategorySprite = gm._instance.cultureImage;
                     }
                     break;
@@ -122,9 +117,7 @@ namespace Managers
                     if (selectedQuestions == null || selectedQuestions.Count == 0)
                     {
                         selectedQuestions = natureQuestions.questionList.ToList();
-                        easyQuestions = selectedQuestions.Where(x => x.Difficulty == QuestionDifficulty.EASY).ToList();
-                        normalQuestions = selectedQuestions.Where(x => x.Difficulty == QuestionDifficulty.NORMAL).ToList();
-                        hardQuestions = selectedQuestions.Where(x => x.Difficulty == QuestionDifficulty.HARD).ToList();
+                        questionPool = selectedQuestions.Where(x => x.Difficulty == diff).ToList();
                         defaultCategorySprite = gm._instance.natureImage;
                     }
                     break;
@@ -132,9 +125,7 @@ namespace Managers
                     if (selectedQuestions == null || selectedQuestions.Count == 0)
                     {
                         selectedQuestions = covidQuestions.questionList.ToList();
-                        easyQuestions = selectedQuestions.Where(x => x.Difficulty == QuestionDifficulty.EASY).ToList();
-                        normalQuestions = selectedQuestions.Where(x => x.Difficulty == QuestionDifficulty.NORMAL).ToList();
-                        hardQuestions = selectedQuestions.Where(x => x.Difficulty == QuestionDifficulty.HARD).ToList();
+                        questionPool = selectedQuestions.Where(x => x.Difficulty == diff).ToList();
                         defaultCategorySprite = gm._instance.covidImage;
                     }
                     break;
@@ -144,38 +135,31 @@ namespace Managers
             }
         }
 
-        private void LostDueToTimer()
-        {
-            Debug.Log("lost");
-            tm.timer = tm.timeForAnswer;
-            answersGiven++;
-
-            int randomIndex = Random.Range(0, sm._instance.WrongAnswers.Length);
-            sm._instance.audioController.PlayOneShot(sm._instance.WrongAnswers[randomIndex]);
-            gui._instance.ResetButtonColors();
-            
-            gui._instance.UpdateAnswersScore(totalCorrectAnswers, totalQuestions);
-            SelectRandomQuestion(gm._instance.currentDifficulty);
-        }
-
+        
+        /// <summary>
+        /// Select a random question from the set question list based on the game difficulty
+        /// </summary>
+        /// <param name="diff">The set game difficulty</param>
         public void SelectRandomQuestion(QuestionDifficulty diff)
-        {
-            StatsCanvas.SetActive(false);
+        {            
+            StatsCanvas.SetActive(false);            
+            
             // check the total questions of the level
-            NumberOfQuestionsToAnswer();
+            TotalQuestionsToAnswer();
             
             // if we can provide questions choose one
-            // else game over
+            // else end question set
             if (answersGiven < totalQuestions)
             {
                 if (questionPool.Count() < (totalQuestions - answersGiven))
-                {                    
-                    questionPool = easyQuestions.ToList();                    
+                {                                      
+                    questionPool = selectedQuestions.Where(x => x.Difficulty == diff).ToList();
                 }
                 int randomIndex = Random.Range(0, questionPool.Count);
 
-                currentQuestion = questionPool[randomIndex];                           
+                currentQuestion = questionPool[randomIndex];
 
+                // assign question text to button text
                 gui._instance.QuestionText.text = currentQuestion.Text;
 
                 // assign question image
@@ -189,7 +173,8 @@ namespace Managers
                     gui._instance.QuestionImage.sprite = currentQuestion.Image;
                 }
 
-                // assign question text to button text
+                // count the number of possible answers the question has (max 6)
+                // assign their text to buttons' text and make the buttons active                
                 int numberOfAnswers = 0;
                 for (int i = 0; i < gui._instance.Answers.Length; i++)
                 {
@@ -197,7 +182,7 @@ namespace Managers
                     gui._instance.Answers[i].GetComponentInChildren<Text>().text = currentQuestion.Answers[i].text;
                     gui._instance.Answers[i].interactable = true;
 
-                    // count number of answers
+                    
                     if (!string.IsNullOrWhiteSpace(currentQuestion.Answers[i].text))
                     {
                         numberOfAnswers++;
@@ -215,15 +200,31 @@ namespace Managers
             }
             else
             {
-                answersGiven = 0;
-                totalCorrectAnswers = 0;
-                gm._instance.currentState = GameState.GameOver;
-
-                StatsCanvas.SetActive(true);
-                //SceneManager.LoadScene(3);
+                QuestionSetEnded();                                        
             }
         }
 
+        /// <summary>
+        /// Stops current set of questions and timer
+        /// </summary>
+        private void QuestionSetEnded()
+        {
+            // stop timer
+            TimeManager.timerIsPaused = true;
+
+            // reset question stats
+            answersGiven = 0;
+            totalCorrectAnswers = 0;
+
+            gui._instance.UpdateAnswersScore(totalCorrectAnswers, totalQuestions);
+
+            // display stats
+            StatsCanvas.SetActive(true);
+        }
+
+        /// <summary>
+        /// Checks if the answer is correct and loads next question
+        /// </summary>
         public void CheckAnswer()
         {
             ++answersGiven;
@@ -278,15 +279,46 @@ namespace Managers
             }            
 
             gui._instance.UpdateAnswersScore(totalCorrectAnswers, totalQuestions);
-
-
+                        
             StartCoroutine(GotoNextQuestionWithDelay(tm.nextQuestionDelay));
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        private void LostDueToTimer()
+        {
+            answersGiven++;
+
+            // reset timer
+            tm.ResetTimer();
+            
+            // play sound
+            int randomIndex = Random.Range(0, sm._instance.WrongAnswers.Length);
+            sm._instance.audioController.PlayOneShot(sm._instance.WrongAnswers[randomIndex]);
+            gui._instance.ResetButtonColors();
+
+            gui._instance.UpdateAnswersScore(totalCorrectAnswers, totalQuestions);
+
+            // go to next question if question set is not over
+            if (answersGiven < totalQuestions)
+            {
+                SelectRandomQuestion(gm._instance.currentDifficulty);
+            }
+
+        }
+
+        /// <summary>
+        /// Loads next question after some seconds
+        /// </summary>
+        /// <param name="delay">the delay in seconds</param>
+        /// <returns></returns>
         IEnumerator GotoNextQuestionWithDelay(float delay)
         {
+            // stop question timer for as long as is the question delay
             isQuestionAnswered = true;
             
+            // make all buttons non interactable
             foreach (var button in gui._instance.Answers)
             {
                 button.interactable = false;
@@ -294,13 +326,21 @@ namespace Managers
 
             yield return new WaitForSeconds(delay);
 
+            // start timer again
             isQuestionAnswered = false;
-            tm.timer = tm.timeForAnswer;
+
+            tm.ResetTimer();
+            
             gui._instance.ResetButtonColors();
+
+            // load next question
             SelectRandomQuestion(gm._instance.currentDifficulty);
         }
 
-        private void NumberOfQuestionsToAnswer()
+        /// <summary>
+        /// Checks how many questions will the question set have based on the player level
+        /// </summary>
+        private void TotalQuestionsToAnswer()
         {
             switch (gm._instance.player.level)
             {
@@ -340,11 +380,6 @@ namespace Managers
                 default:
                     break;
             }
-        }
-
-        private void OnDisable()
-        {
-            //DisplayStats.CategoryReplay -= SelectRandomQuestion;
-        }
+        }        
     }
 }
