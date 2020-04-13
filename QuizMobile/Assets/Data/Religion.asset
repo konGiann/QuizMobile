@@ -17,7 +17,7 @@ MonoBehaviour:
     Image: {fileID: 0}
     Difficulty: 1
     Answers:
-    - text: "\u03A0\u03C1\u03CE\u03C4\u03B7 \u03B1\u03C0\u03AC\u03BD\u03C4\u03B7\u03C3\u03B7"
+    - text: fgfhgfjhgfhjgf
       isCorrect: 1
     - text: "\u0394\u03B5\u03CD\u03C4\u03B5\u03C1\u03B7 \u03B1\u03C0\u03AC\u03BD\u03C4\u03B7\u03C3\u03B7"
       isCorrect: 0
