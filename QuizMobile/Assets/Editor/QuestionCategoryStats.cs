@@ -55,6 +55,8 @@ public class QuestionCategoryStats : EditorWindow
 
         GUILayout.BeginVertical();
 
+        GUILayout.Label("ΣΥΝΟΛΙΚΕΣ ΕΡΩΤΗΣΕΙΣ: " + questionList.questionList.Count());
+
         GUILayout.Space(10);
         showEasyQuestions = EditorGUILayout.Foldout(showEasyQuestions, "Easy Questions" + "(" + questionList.questionList.Count(x => x.Difficulty == QuestionDifficulty.EASY) + ")");
         if (showEasyQuestions)
