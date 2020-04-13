@@ -1,9 +1,8 @@
-﻿using UnityEngine;
-using UnityEditor;
-using System.Collections;
+﻿using System;
 using System.Collections.Generic;
-using System;
 using System.Linq;
+using UnityEditor;
+using UnityEngine;
 
 public class QuestionEditor : EditorWindow
 {
