@@ -1036,9 +1036,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   religionQuestions: {fileID: 11400000, guid: f61edde3728f5be4796594c9a8b6247d, type: 2}
-  cultureQuestions: {fileID: 0}
-  natureQuestions: {fileID: 0}
-  covidQuestions: {fileID: 0}
+  cultureQuestions: {fileID: 11400000, guid: 1b2e4c68c39f44c41870c2d7800f9650, type: 2}
+  natureQuestions: {fileID: 11400000, guid: ea9ff9e5947ac0249ab54eb672c028e2, type: 2}
+  covidQuestions: {fileID: 11400000, guid: afb6b81880555e84faea13dd9f5a35da, type: 2}
   selectedQuestions: []
   StatsCanvas: {fileID: 627424700}
   questionPool: []
