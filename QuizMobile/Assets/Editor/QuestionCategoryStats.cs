@@ -11,7 +11,7 @@ public class QuestionCategoryStats : EditorWindow
 
     public QuestionList questionList;
 
-    [MenuItem("Example/ColumnsWindow")]
+    [MenuItem("Ερωτήσεις/Στατιστικά Ερωτήσεων")]
     public static void Create()
     {
         var instance = CreateInstance<QuestionCategoryStats>();
@@ -23,19 +23,19 @@ public class QuestionCategoryStats : EditorWindow
     {
         GUILayout.BeginHorizontal();
 
-        if(GUILayout.Button("Open list"))
+        if(GUILayout.Button("Άνοιγμα λίστας"))
         {
             OpenQuestionList();
         }
 
-        if (GUILayout.Button("Expand all"))
+        if (GUILayout.Button("Ανάπτυξη όλων"))
         {
             showEasyQuestions = true;
             showNormalQuestions = true;
             showHardQuestions = true;
         }
 
-        if (GUILayout.Button("Collapse all"))
+        if (GUILayout.Button("Σύμπτυξη όλων"))
         {
             showEasyQuestions = false;
             showNormalQuestions = false;
@@ -44,9 +44,19 @@ public class QuestionCategoryStats : EditorWindow
 
         GUILayout.EndHorizontal();
 
+        GUILayout.Space(10);
+        GUILayout.BeginHorizontal();
+        
+        // show list  asset name
+        string relPath = AssetDatabase.GetAssetPath(questionList);        
+        EditorGUILayout.LabelField("Όνομα αρχείου: ", relPath);
+
+        GUILayout.EndHorizontal();
 
         GUILayout.BeginVertical();
-        showEasyQuestions = EditorGUILayout.Foldout(showEasyQuestions, "Easy Questions");
+
+        GUILayout.Space(10);
+        showEasyQuestions = EditorGUILayout.Foldout(showEasyQuestions, "Easy Questions" + "(" + questionList.questionList.Count(x => x.Difficulty == QuestionDifficulty.EASY) + ")");
         if (showEasyQuestions)
         {
             if (questionList != null)
@@ -58,7 +68,8 @@ public class QuestionCategoryStats : EditorWindow
             }
         }
 
-        showNormalQuestions = EditorGUILayout.Foldout(showNormalQuestions, "Normal Questions");
+        GUILayout.Space(10);
+        showNormalQuestions = EditorGUILayout.Foldout(showNormalQuestions, "Normal Questions" + "(" + questionList.questionList.Count(x => x.Difficulty == QuestionDifficulty.NORMAL) + ")" );
         if (showNormalQuestions)
         {
             if (questionList != null)
@@ -70,7 +81,8 @@ public class QuestionCategoryStats : EditorWindow
             }
         }
 
-        showHardQuestions = EditorGUILayout.Foldout(showHardQuestions, "Hard Questions");
+        GUILayout.Space(10);
+        showHardQuestions = EditorGUILayout.Foldout(showHardQuestions, "Hard Questions" + "(" + questionList.questionList.Count(x => x.Difficulty == QuestionDifficulty.HARD) + ")");
         if (showHardQuestions)
         {
             if (questionList != null)
