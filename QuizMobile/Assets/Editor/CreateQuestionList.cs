@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class CreateQuestionList 
 {
-    [MenuItem("Questions/Create/Question List")]
+    [MenuItem("Ερωτήσεις/Δημιουργία Λίστας Ερωτήσεων")]
     public static QuestionList Create()
     {
         QuestionList asset = ScriptableObject.CreateInstance<QuestionList>();
