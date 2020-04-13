@@ -29,6 +29,7 @@ public class QuestionEditor : EditorWindow
 
     void OnGUI()
     {
+        #region Top Bar
         GUILayout.BeginHorizontal();
         GUILayout.Label("Επεξεργαστής Ερωτήσεων", EditorStyles.boldLabel);
         if (questionList != null)
@@ -41,7 +42,7 @@ public class QuestionEditor : EditorWindow
         }
         if (GUILayout.Button("Άνοιγμα λίστας ερωτήσεων"))
         {
-            OpenItemList();
+            OpenQuestionList();
         }
         if (GUILayout.Button("Νέα λίστα ερωτήσεων"))
         {
@@ -60,15 +61,18 @@ public class QuestionEditor : EditorWindow
             }
             if (GUILayout.Button("Άνοιγμα υπάρχουσας λίστας", GUILayout.ExpandWidth(false)))
             {
-                OpenItemList();
+                OpenQuestionList();
             }
             GUILayout.EndHorizontal();
-        }
+        } 
+        #endregion
 
         GUILayout.Space(20);
 
+        
         if (questionList != null)
         {
+            #region Navigation Bar
             GUILayout.BeginHorizontal();
 
             GUILayout.Space(10);
@@ -90,24 +94,24 @@ public class QuestionEditor : EditorWindow
             if (GUILayout.Button("Επόμ.", GUILayout.ExpandWidth(false)))
             {
                 if (!Array.Exists(questionList.questionList[viewIndex - 1].Answers, element => element.isCorrect == true) ||
-                    questionList.questionList[viewIndex - 1].Answers.Count(x => x.isCorrect == true) > 1 )
+                    questionList.questionList[viewIndex - 1].Answers.Count(x => x.isCorrect == true) > 1)
                 {
                     EditorUtility.DisplayDialog("Ουπς!", "Σημείωσε τουλάχιστον μια σωστή απάντηση και όχι παραπάνω!", "OK");
-                }                
+                }
                 else
                 {
                     if (viewIndex < questionList.questionList.Count)
                     {
                         viewIndex++;
                     }
-                }                
+                }
             }
 
             GUILayout.Space(60);
 
             if (GUILayout.Button("Προσθήκη ερώτησης", GUILayout.ExpandWidth(false)))
             {
-                if(questionList.questionList.Count > 0)
+                if (questionList.questionList.Count > 0)
                 {
                     if (!Array.Exists(questionList.questionList[viewIndex - 1].Answers, element => element.isCorrect == true) ||
                     questionList.questionList[viewIndex - 1].Answers.Count(x => x.isCorrect == true) > 1)
@@ -116,19 +120,19 @@ public class QuestionEditor : EditorWindow
                     }
                     else
                     {
-                        AddItem();
+                        AddQuestion();
                     }
                 }
                 else
                 {
-                    AddItem();
-                }                                
+                    AddQuestion();
+                }
             }
             if (GUILayout.Button("Διαγραφή ερώτησης", GUILayout.ExpandWidth(false)))
             {
                 if (questionList.questionList.Count > 0)
                 {
-                    DeleteItem(viewIndex - 1); 
+                    DeleteQuestion(viewIndex - 1);
                 }
             }
 
@@ -136,40 +140,44 @@ public class QuestionEditor : EditorWindow
             string relPath = AssetDatabase.GetAssetPath(questionList);
             EditorGUILayout.LabelField("Όνομα αρχείου: ", relPath);
 
-            GUILayout.EndHorizontal();            
+            GUILayout.EndHorizontal();  
+            #endregion
 
             if (questionList.questionList == null)
                 Debug.Log("Άδεια λίστα");
+            
+            #region Question Body
             if (questionList.questionList.Count > 0)
             {
                 GUILayout.BeginHorizontal();
-                viewIndex = Mathf.Clamp(EditorGUILayout.IntField("Ερώτηση", viewIndex, GUILayout.ExpandWidth(false)), 1, questionList.questionList.Count);                
+                viewIndex = Mathf.Clamp(EditorGUILayout.IntField("Ερώτηση", viewIndex, GUILayout.ExpandWidth(false)), 1, questionList.questionList.Count);
                 EditorGUILayout.LabelField("από   " + questionList.questionList.Count.ToString(), "", GUILayout.ExpandWidth(false));
 
-                
+
                 GUILayout.EndHorizontal();
 
 
                 questionList.questionList[viewIndex - 1].Text = EditorGUILayout.TextField("Κείμενο ερώτησης", questionList.questionList[viewIndex - 1].Text as string);
 
-                questionList.questionList[viewIndex - 1].Image = EditorGUILayout.ObjectField("Εικόνα ερώτησης", 
+                questionList.questionList[viewIndex - 1].Image = EditorGUILayout.ObjectField("Εικόνα ερώτησης",
                     questionList.questionList[viewIndex - 1].Image, typeof(Sprite), false) as Sprite;
-                
+
                 questionList.questionList[viewIndex - 1].Difficulty = (QuestionDifficulty)EditorGUILayout.EnumPopup("Δυσκολία", questionList.questionList[viewIndex - 1].Difficulty);
-                
+
                 GUILayout.Space(10);
-                
+
                 // Answers
                 for (int i = 0; i < questionList.questionList[viewIndex - 1].Answers.Length; i++)
                 {
                     GUILayout.Space(10);
                     questionList.questionList[viewIndex - 1].Answers[i].text = EditorGUILayout.TextField("Απάντηση", questionList.questionList[viewIndex - 1].Answers[i].text as string);
                     questionList.questionList[viewIndex - 1].Answers[i].isCorrect = EditorGUILayout.Toggle("Είναι η σωστή;", questionList.questionList[viewIndex - 1].Answers[i].isCorrect);
-                    
+
                 }
 
-                GUILayout.Space(10);                
-            }
+                GUILayout.Space(10);
+            } 
+            #endregion
             else
             {
                 GUILayout.Label("Η λίστα ερωτήσεων είναι άδεια.");
@@ -196,7 +204,7 @@ public class QuestionEditor : EditorWindow
         }
     }
 
-    void OpenItemList()
+    void OpenQuestionList()
     {
         string absPath = EditorUtility.OpenFilePanel("Επιλογή λίστας ερωτήσεων", "", "");
         if (absPath.StartsWith(Application.dataPath))
@@ -212,7 +220,7 @@ public class QuestionEditor : EditorWindow
         }
     }
 
-    void AddItem()
+    void AddQuestion()
     {
         Question newQuestion = new Question();
         newQuestion.Text= "Νέα ερώτηση";
@@ -230,7 +238,7 @@ public class QuestionEditor : EditorWindow
         viewIndex = questionList.questionList.Count;
     }
 
-    void DeleteItem(int index)
+    void DeleteQuestion(int index)
     {
         if (EditorUtility.DisplayDialog("Διαγραφή ερώτησης;",
                                        "Είσαι σίγουρος πως θέλεις να διαγράψεις την ερώτηση;",
