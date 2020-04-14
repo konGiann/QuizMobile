@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using gui = Managers.GuiManager;
 
 namespace Managers
@@ -10,6 +11,7 @@ namespace Managers
         public int timeForAnswer;
         public float nextQuestionDelay;
         public static bool timerIsPaused;
+        public Image TimeImage;
 
         #endregion
 
@@ -59,6 +61,7 @@ namespace Managers
             if (!isQuestionAnswered)
             {
                 timer -= Time.deltaTime;
+                TimeImage.fillAmount = timer / timeForAnswer;
             }
             // display timer on GUI
             int displayAsInt = (int)timer;
