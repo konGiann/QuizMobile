@@ -19,6 +19,18 @@ namespace Managers
             PlayerPrefs.SetInt("Score", score);
         }
 
+        public static int GetLifes()
+        {
+            if (PlayerPrefs.HasKey("Lifes"))
+                return PlayerPrefs.GetInt("Lifes");
+            else return 0;
+        }
+
+        public static void SetLifes(int lifes)
+        {
+            PlayerPrefs.SetInt("Lifes", lifes);
+        }
+
         #endregion
 
         #region player highscore

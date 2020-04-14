@@ -20,6 +20,7 @@ namespace Managers
 
         [Header("Game Info")]
         public int highScore;
+        public int lifes;
 
         public QuestionDifficulty currentDifficulty;
 
@@ -51,12 +52,8 @@ namespace Managers
         /// </summary>
         private void Init()
         {
-            // reset score and set highscore
-            PlayerPrefmanager.ResetStats();
-            highScore = PlayerPrefmanager.GetHighScore();
             
-            
-
+                                    
             #region events to look at
 
             // increase score on correct answer
@@ -76,6 +73,9 @@ namespace Managers
                 level = 1,
                 score = 0
             };
+
+            // load player's statistics
+            LoadPlayerStats();
         }
 
         private void Start()
@@ -106,6 +106,7 @@ namespace Managers
         private void StartQuestionSet()
         {
             TimeManager.timerIsPaused = false;
+            player.lifes = lifes;
             qm._instance.SelectRandomQuestion(currentDifficulty);
         }
 
@@ -160,10 +161,12 @@ namespace Managers
 
         private void ReduceLifes()
         {
-            //
+            player.lifes--;
+            gui._instance.UpdatePlayerLifes(player.lifes);
+            PlayerPrefmanager.SetLifes(player.lifes);
         }
         
-        void IncreaseScore()
+        private void IncreaseScore()
         {
             switch (currentDifficulty)
             {
@@ -182,6 +185,17 @@ namespace Managers
                 default:
                     break;
             }
+            PlayerPrefmanager.SetScore(player.score);
+
+        }
+
+        private void LoadPlayerStats()
+        {
+            player.score = PlayerPrefmanager.GetScore();
+
+            highScore = PlayerPrefmanager.GetHighScore();
+
+            player.lifes = lifes;
         }
     }
 

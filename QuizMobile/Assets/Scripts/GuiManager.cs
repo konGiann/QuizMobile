@@ -17,6 +17,7 @@ namespace Managers
         public Text TimeText;
         public Image QuestionImage;
         public Image TotalQuetionsFiller;
+        public Text Lifes;
 
         public Button[] Answers;
 
@@ -26,18 +27,12 @@ namespace Managers
             {
                 _instance = this;
             }
-
-            //else if (_instance != null)
-            //{
-            //    Destroy(gameObject);
-            //}
-
-            //DontDestroyOnLoad(gameObject);
-
+         
             // initialize score values
             CorrectAnswersScore.text = "0";
             TotalAnswersScore.text = "/0";
             TopScore.text = PlayerPrefmanager.GetHighScore().ToString();
+            Lifes.text = GameManager._instance.player.lifes.ToString();
         }
 
         public void ResetButtonColors()
@@ -61,6 +56,11 @@ namespace Managers
         public void UpdatePlayerScore(int score)
         {
             PlayerScore.text = score.ToString();
+        }
+
+        public void UpdatePlayerLifes(int lifes)
+        {
+            Lifes.text = lifes.ToString();
         }
     }
 }

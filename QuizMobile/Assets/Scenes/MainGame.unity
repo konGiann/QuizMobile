@@ -1434,8 +1434,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -1.2000122, y: 0}
-  m_SizeDelta: {x: -62.9, y: 0}
+  m_AnchoredPosition: {x: -6.799988, y: -3.699997}
+  m_SizeDelta: {x: -92.4, y: -62.8}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &417661017
 MonoBehaviour:
@@ -1462,14 +1462,14 @@ MonoBehaviour:
     m_BestFit: 1
     m_MinSize: 40
     m_MaxSize: 181
-    m_Alignment: 4
+    m_Alignment: 1
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'test test test test test test test test test test test test test test
-    test test test test test test test test test test test test '
+  m_Text: 'test test test test  test  test  test  test  test  test  test  test  test 
+    test  test  test  test  test  test  test  test  test '
 --- !u!222 &417661018
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2512,6 +2512,7 @@ MonoBehaviour:
   natureImage: {fileID: 21300000, guid: 12f4dfe8a461c734298ee0942d2d39be, type: 3}
   covidImage: {fileID: 21300000, guid: 8850c44a4353f6b42b78d04fbfda05f5, type: 3}
   highScore: 0
+  lifes: 3
   currentDifficulty: 0
   currentState: 0
   defaultCategorySprite: {fileID: 0}
@@ -2671,6 +2672,7 @@ MonoBehaviour:
   TimeText: {fileID: 284948743}
   QuestionImage: {fileID: 2077021625}
   TotalQuetionsFiller: {fileID: 290873265}
+  Lifes: {fileID: 2114265701}
   Answers:
   - {fileID: 522774325}
   - {fileID: 1973123123}
@@ -3724,6 +3726,7 @@ RectTransform:
   - {fileID: 273247112}
   - {fileID: 1542483857}
   - {fileID: 1553172219}
+  - {fileID: 2114265700}
   m_Father: {fileID: 84901889}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -5606,4 +5609,81 @@ CanvasRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2096855051}
+  m_CullTransparentMesh: 0
+--- !u!1 &2114265699
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2114265700}
+  - component: {fileID: 2114265702}
+  - component: {fileID: 2114265701}
+  m_Layer: 5
+  m_Name: Lifes
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &2114265700
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2114265699}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1372317164}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 290, y: -2}
+  m_SizeDelta: {x: 146, y: 118.8}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &2114265701
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2114265699}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FontData:
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_FontSize: 26
+    m_FontStyle: 0
+    m_BestFit: 1
+    m_MinSize: 10
+    m_MaxSize: 40
+    m_Alignment: 4
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: 
+--- !u!222 &2114265702
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2114265699}
   m_CullTransparentMesh: 0

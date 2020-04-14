@@ -147,9 +147,9 @@ namespace Managers
             // check the total questions of the level
             TotalQuestionsToAnswer();
             
-            // if we can provide questions choose one
-            // else end question set
-            if (answersGiven < totalQuestions)
+            // if there are still questions to be answered and player has lifes, choose one question
+            // else end question set and show results
+            if (answersGiven < totalQuestions && gm._instance.player.lifes > 0)
             {
                 if (questionPool.Count() < (totalQuestions - answersGiven))
                 {                                      
@@ -264,8 +264,7 @@ namespace Managers
                     PlayerPrefmanager.SetHighScore(gm._instance.highScore);
                 }
 
-                onCorrectAnswer();
-                // PlayerPrefmanager.SetScore(totalCorrectAnswers);
+                onCorrectAnswer();                
             }
 
             else // wrong
@@ -279,8 +278,9 @@ namespace Managers
             }            
 
             gui._instance.UpdateAnswersScore(totalCorrectAnswers, totalQuestions);
-                        
-            StartCoroutine(GotoNextQuestionWithDelay(tm.nextQuestionDelay));
+
+
+            StartCoroutine(GotoNextQuestionWithDelay(tm.nextQuestionDelay));                       
         }
 
         /// <summary>
