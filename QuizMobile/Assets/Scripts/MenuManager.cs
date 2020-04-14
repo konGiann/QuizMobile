@@ -8,6 +8,14 @@ namespace Managers
     {
         public static MenuManager _instance;
 
+        #region inspector fields
+
+        public GameObject MenuPanel;
+
+
+        #endregion
+
+
         #region fields
 
         [HideInInspector]
