@@ -6,9 +6,19 @@ public class PlayerProfile
 
     public int score;
 
-    public int level;
+    public int playerLevel;
 
     public int lifes;
 
-    public List<int> categoriesLevel;
+    public int historyLevel;
+
+    public int cultureLevel;
+
+    public int natureLevel;
+
+    public int covidLevel;
+
+    public int geographyLevel;
+
+    public int religionLevel;
 }

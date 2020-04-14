@@ -31,6 +31,7 @@ namespace Managers
             // initialize score values
             CorrectAnswersScore.text = "0";
             TotalAnswersScore.text = "/0";
+            PlayerScore.text = PlayerPrefmanager.GetScore().ToString();
             TopScore.text = PlayerPrefmanager.GetHighScore().ToString();
             Lifes.text = GameManager._instance.player.lifes.ToString();
         }
@@ -47,9 +48,7 @@ namespace Managers
         {
             CorrectAnswersScore.text = totalCorrectAnswers.ToString();
             TotalAnswersScore.text = "/" + totalQuestions.ToString();
-
-            Debug.Log(qm._instance.answersGiven);
-            Debug.Log(qm._instance.totalQuestions);
+            
             TotalQuetionsFiller.fillAmount = (float)qm._instance.answersGiven / (float)qm._instance.totalQuestions;
         }
 

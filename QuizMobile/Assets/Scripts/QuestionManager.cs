@@ -342,7 +342,7 @@ namespace Managers
         /// </summary>
         private void TotalQuestionsToAnswer()
         {
-            switch (gm._instance.player.level)
+            switch (gm._instance.player.playerLevel)
             {
                 case 1:
                 case 2:

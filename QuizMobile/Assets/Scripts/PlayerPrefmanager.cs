@@ -19,16 +19,17 @@ namespace Managers
             PlayerPrefs.SetInt("Score", score);
         }
 
-        public static int GetLifes()
+        public static int GetPlayerLevel()
         {
-            if (PlayerPrefs.HasKey("Lifes"))
-                return PlayerPrefs.GetInt("Lifes");
-            else return 0;
+            if (PlayerPrefs.HasKey("PlayerLevel"))
+                return PlayerPrefs.GetInt("PlayerLevel");
+            else
+                return 0;
         }
 
-        public static void SetLifes(int lifes)
+        public static void SetPlayerLevel(int playerLevel)
         {
-            PlayerPrefs.SetInt("Lifes", lifes);
+            PlayerPrefs.SetInt("PlayerLevel", playerLevel);
         }
 
         #endregion

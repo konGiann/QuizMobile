@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 using gui = Managers.GuiManager;
 using menu = Managers.MenuManager;
@@ -66,14 +67,7 @@ namespace Managers
             DisplayStats.TrySameQuestionSetAgain += StartQuestionSet;
 
             #endregion
-
-            // init player
-            player = new PlayerProfile
-            {
-                level = 1,
-                score = 0
-            };
-
+            
             // load player's statistics
             LoadPlayerStats();
         }
@@ -107,6 +101,7 @@ namespace Managers
         {
             TimeManager.timerIsPaused = false;
             player.lifes = lifes;
+            gui._instance.UpdatePlayerLifes(player.lifes);
             qm._instance.SelectRandomQuestion(currentDifficulty);
         }
 
@@ -145,11 +140,11 @@ namespace Managers
         /// </summary>
         private void CheckDifficulty()
         {
-            if (player.level <= 5)
+            if (player.playerLevel <= 5)
             {
                 currentDifficulty = QuestionDifficulty.EASY;
             }
-            else if (player.level > 5 && player.level <= 10)
+            else if (player.playerLevel > 5 && player.playerLevel <= 10)
             {
                 currentDifficulty = QuestionDifficulty.NORMAL;
             }
@@ -162,8 +157,7 @@ namespace Managers
         private void ReduceLifes()
         {
             player.lifes--;
-            gui._instance.UpdatePlayerLifes(player.lifes);
-            PlayerPrefmanager.SetLifes(player.lifes);
+            gui._instance.UpdatePlayerLifes(player.lifes);            
         }
         
         private void IncreaseScore()
@@ -191,9 +185,12 @@ namespace Managers
 
         private void LoadPlayerStats()
         {
+            // init player
+            player = new PlayerProfile();
+
             player.score = PlayerPrefmanager.GetScore();
 
-            highScore = PlayerPrefmanager.GetHighScore();
+            //highScore = PlayerPrefmanager.GetHighScore();
 
             player.lifes = lifes;
         }
