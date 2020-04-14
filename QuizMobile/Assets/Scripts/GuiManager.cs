@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using qm = Managers.QuestionManager;
 
 namespace Managers
 {
@@ -15,6 +16,8 @@ namespace Managers
         public Text TopScore;
         public Text TimeText;
         public Image QuestionImage;
+        public Image TotalQuetionsFiller;
+
         public Button[] Answers;
 
         private void Awake()
@@ -49,6 +52,10 @@ namespace Managers
         {
             CorrectAnswersScore.text = totalCorrectAnswers.ToString();
             TotalAnswersScore.text = "/" + totalQuestions.ToString();
+
+            Debug.Log(qm._instance.answersGiven);
+            Debug.Log(qm._instance.totalQuestions);
+            TotalQuetionsFiller.fillAmount = (float)qm._instance.answersGiven / (float)qm._instance.totalQuestions;
         }
 
         public void UpdatePlayerScore(int score)
