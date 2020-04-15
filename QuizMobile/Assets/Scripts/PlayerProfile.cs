@@ -6,7 +6,7 @@ public class PlayerProfile
 
     public int score;
 
-    public int playerLevel;
+    public int level;
 
     public int lifes;
 
@@ -21,4 +21,5 @@ public class PlayerProfile
     public int geographyLevel;
 
     public int religionLevel;
+    
 }

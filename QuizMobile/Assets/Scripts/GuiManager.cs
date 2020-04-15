@@ -18,6 +18,7 @@ namespace Managers
         public Image QuestionImage;
         public Image TotalQuetionsFiller;
         public Text Lifes;
+        public GameObject StatsScreenCanvas;
 
         public Button[] Answers;
 

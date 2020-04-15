@@ -532,6 +532,52 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 217007627}
   m_CullTransparentMesh: 0
+--- !u!1 &249257852
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 249257853}
+  - component: {fileID: 249257854}
+  m_Layer: 0
+  m_Name: Geography
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &249257853
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 249257852}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 785711379}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &249257854
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 249257852}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ee713ed0b25c1b4fb54f46fe0068cca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  categoryName: Geography
+  level: 1
+  questions: {fileID: 11400000, guid: 0e1565e239a0b61469d2ac418dd86bfd, type: 2}
 --- !u!1 &271438562
 GameObject:
   m_ObjectHideFlags: 0
@@ -1081,17 +1127,68 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28089c5b0162dc74f99a2efed9cc3a8a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  religionQuestions: {fileID: 11400000, guid: f61edde3728f5be4796594c9a8b6247d, type: 2}
-  cultureQuestions: {fileID: 11400000, guid: 1b2e4c68c39f44c41870c2d7800f9650, type: 2}
-  natureQuestions: {fileID: 11400000, guid: ea9ff9e5947ac0249ab54eb672c028e2, type: 2}
-  covidQuestions: {fileID: 11400000, guid: afb6b81880555e84faea13dd9f5a35da, type: 2}
   selectedQuestions: []
+  religion: {fileID: 1226348777}
+  culture: {fileID: 1103302593}
+  nature: {fileID: 343359655}
+  covid: {fileID: 1830729012}
+  history: {fileID: 1386873475}
+  geography: {fileID: 249257854}
+  currentCategory: {fileID: 0}
+  currentDifficulty: 0
   StatsCanvas: {fileID: 627424700}
   questionPool: []
   totalCorrectAnswers: 0
   totalQuestions: 0
   answersGiven: 0
+  answersNeededToPassLevel: 0
   isQuestionAnswered: 0
+--- !u!1 &343359653
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 343359654}
+  - component: {fileID: 343359655}
+  m_Layer: 0
+  m_Name: Nature
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &343359654
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 343359653}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 785711379}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &343359655
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 343359653}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ee713ed0b25c1b4fb54f46fe0068cca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  categoryName: NAture
+  level: 1
+  questions: {fileID: 11400000, guid: ea9ff9e5947ac0249ab54eb672c028e2, type: 2}
 --- !u!1 &347892368
 GameObject:
   m_ObjectHideFlags: 0
@@ -2673,6 +2770,7 @@ MonoBehaviour:
   QuestionImage: {fileID: 2077021625}
   TotalQuetionsFiller: {fileID: 290873265}
   Lifes: {fileID: 2114265701}
+  StatsScreenCanvas: {fileID: 627424700}
   Answers:
   - {fileID: 522774325}
   - {fileID: 1973123123}
@@ -2771,6 +2869,42 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 751336268}
   m_CullTransparentMesh: 0
+--- !u!1 &785711378
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 785711379}
+  m_Layer: 0
+  m_Name: Categories
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &785711379
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 785711378}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 351.84198, y: 355.69125, z: -28.190592}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1226348778}
+  - {fileID: 1830729011}
+  - {fileID: 249257853}
+  - {fileID: 1386873474}
+  - {fileID: 343359654}
+  - {fileID: 1103302592}
+  m_Father: {fileID: 0}
+  m_RootOrder: 10
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &809310934
 GameObject:
   m_ObjectHideFlags: 0
@@ -3273,6 +3407,52 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1076557970}
   m_CullTransparentMesh: 0
+--- !u!1 &1103302591
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1103302592}
+  - component: {fileID: 1103302593}
+  m_Layer: 0
+  m_Name: Culture
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1103302592
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1103302591}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 785711379}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1103302593
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1103302591}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ee713ed0b25c1b4fb54f46fe0068cca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  categoryName: Culture
+  level: 1
+  questions: {fileID: 11400000, guid: 1b2e4c68c39f44c41870c2d7800f9650, type: 2}
 --- !u!1 &1113961434
 GameObject:
   m_ObjectHideFlags: 0
@@ -3692,6 +3872,52 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1181189765}
   m_CullTransparentMesh: 0
+--- !u!1 &1226348776
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1226348778}
+  - component: {fileID: 1226348777}
+  m_Layer: 0
+  m_Name: Religion
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1226348777
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1226348776}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ee713ed0b25c1b4fb54f46fe0068cca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  categoryName: Religrion
+  level: 1
+  questions: {fileID: 11400000, guid: f61edde3728f5be4796594c9a8b6247d, type: 2}
+--- !u!4 &1226348778
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1226348776}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 785711379}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1372317163
 GameObject:
   m_ObjectHideFlags: 0
@@ -3771,6 +3997,52 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1372317163}
   m_CullTransparentMesh: 0
+--- !u!1 &1386873473
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1386873474}
+  - component: {fileID: 1386873475}
+  m_Layer: 0
+  m_Name: History
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1386873474
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1386873473}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 785711379}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1386873475
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1386873473}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ee713ed0b25c1b4fb54f46fe0068cca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  categoryName: History
+  level: 1
+  questions: {fileID: 11400000, guid: 970a26539de32564ab3f602730a37b1e, type: 2}
 --- !u!1 &1401068681
 GameObject:
   m_ObjectHideFlags: 0
@@ -4330,6 +4602,52 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1827487718}
   m_CullTransparentMesh: 0
+--- !u!1 &1830729010
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1830729011}
+  - component: {fileID: 1830729012}
+  m_Layer: 0
+  m_Name: Covid
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1830729011
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1830729010}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 785711379}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1830729012
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1830729010}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ee713ed0b25c1b4fb54f46fe0068cca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  categoryName: COVID-19
+  level: 1
+  questions: {fileID: 11400000, guid: afb6b81880555e84faea13dd9f5a35da, type: 2}
 --- !u!1 &1830741304
 GameObject:
   m_ObjectHideFlags: 0

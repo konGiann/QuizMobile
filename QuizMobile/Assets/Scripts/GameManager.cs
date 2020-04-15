@@ -64,7 +64,7 @@ namespace Managers
             qm._instance.onWrongAnswer += ReduceLifes;
 
             // start question set again on failure
-            DisplayStats.TrySameQuestionSetAgain += StartQuestionSet;
+            DisplayStats.TrySameQuestionSetAgain += RetryQuestionSet;
 
             #endregion
             
@@ -74,19 +74,15 @@ namespace Managers
 
         private void Start()
         {
-            CheckDifficulty();
+            //CheckDifficulty();
 
             // load question set of chosen category
-            qm._instance.SetSelectedCategory(menu._instance.selectedCategory, currentDifficulty);
-            Debug.Log("hi");
-            StartQuestionSet();
+            qm._instance.SetSelectedCategory();           
+            RetryQuestionSet();
         }
         
         private void Update()
-        {
-            //CheckGameState();
-            CheckDifficulty();
-
+        {        
             // check for ESC key to pause game
             if (Input.GetKeyDown(KeyCode.Escape))
             {
@@ -97,12 +93,12 @@ namespace Managers
         /// <summary>
         /// start question set based on difficulty
         /// </summary>
-        private void StartQuestionSet()
+        private void RetryQuestionSet()
         {
             TimeManager.timerIsPaused = false;
             player.lifes = lifes;
             gui._instance.UpdatePlayerLifes(player.lifes);
-            qm._instance.SelectRandomQuestion(currentDifficulty);
+            qm._instance.SelectRandomQuestion(qm._instance.currentDifficulty);
         }
 
         //private void CheckGameState()
@@ -138,21 +134,23 @@ namespace Managers
         /// Check game difficulty based on player level
         /// we use that to assign the proper question set based on difficulty in the QuestionManager
         /// </summary>
-        private void CheckDifficulty()
-        {
-            if (player.playerLevel <= 5)
-            {
-                currentDifficulty = QuestionDifficulty.EASY;
-            }
-            else if (player.playerLevel > 5 && player.playerLevel <= 10)
-            {
-                currentDifficulty = QuestionDifficulty.NORMAL;
-            }
-            else
-            {
-                currentDifficulty = QuestionDifficulty.HARD;
-            }
-        }
+        //private void CheckDifficulty()
+        //{
+        //    if (player.level <= 5)
+        //    {
+        //        currentDifficulty = QuestionDifficulty.EASY;
+        //    }
+        //    else if (player.level > 5 && player.level <= 10)
+        //    {
+        //        currentDifficulty = QuestionDifficulty.NORMAL;
+        //    }
+        //    else
+        //    {
+        //        currentDifficulty = QuestionDifficulty.HARD;
+        //    }
+        //}
+
+        
 
         private void ReduceLifes()
         {
@@ -190,6 +188,7 @@ namespace Managers
 
             player.score = PlayerPrefmanager.GetScore();
 
+            player.level = 1;
             //highScore = PlayerPrefmanager.GetHighScore();
 
             player.lifes = lifes;

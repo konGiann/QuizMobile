@@ -32,6 +32,19 @@ namespace Managers
             PlayerPrefs.SetInt("PlayerLevel", playerLevel);
         }
 
+        public static int GetCategoryLevel(Category category)
+        {
+            if (PlayerPrefs.HasKey(category.categoryName))
+                return PlayerPrefs.GetInt(category.categoryName);
+            else return 0;
+        }
+
+        public static void SetCategoryLevel(Category category, int level)
+        {
+            PlayerPrefs.SetInt(category.categoryName, level);
+        }
+            
+
         #endregion
 
         #region player highscore
