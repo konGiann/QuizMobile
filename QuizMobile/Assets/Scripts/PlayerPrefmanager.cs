@@ -36,7 +36,14 @@ namespace Managers
         {
             if (PlayerPrefs.HasKey(category.categoryName))
                 return PlayerPrefs.GetInt(category.categoryName);
-            else return 0;
+            else return 1;
+        }
+
+        public static int GetCategoryLevel(string categoryName)
+        {
+            if (PlayerPrefs.HasKey(categoryName))
+                return PlayerPrefs.GetInt(categoryName);
+            else return 1;
         }
 
         public static void SetCategoryLevel(Category category, int level)
@@ -46,7 +53,7 @@ namespace Managers
             
 
         #endregion
-
+        
         #region player highscore
 
         public static int GetHighScore()
@@ -69,6 +76,16 @@ namespace Managers
         public static void ResetStats()
         {
             PlayerPrefs.SetInt("Score", 0);
+        }
+
+        public static void ResetAllCategoriesLevel()
+        {
+            PlayerPrefs.SetInt("Religion", 1);
+            PlayerPrefs.SetInt("COVID-19", 1);
+            PlayerPrefs.SetInt("Geography", 1);
+            PlayerPrefs.SetInt("History", 1);
+            PlayerPrefs.SetInt("Nature", 1);
+            PlayerPrefs.SetInt("Culture", 1);
         }
 
         #endregion

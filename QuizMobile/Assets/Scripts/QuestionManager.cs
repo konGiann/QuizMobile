@@ -184,7 +184,7 @@ namespace Managers
             
             // if there are still questions to be answered and player has lifes, choose one question
             // else end question set and show results
-            if (answersGiven < totalQuestions && gm._instance.player.lifes > 0)
+            if (answersGiven < totalQuestions && gm._instance.player.lives > 0)
             {
                 if (questionPool.Count() < (totalQuestions - answersGiven))
                 {                                      
@@ -246,13 +246,7 @@ namespace Managers
         {
             // stop timer
             TimeManager.timerIsPaused = true;
-
-            // reset question stats
-            answersGiven = 0;
-            totalCorrectAnswers = 0;
-
-            gui._instance.UpdateAnswersScore(totalCorrectAnswers, totalQuestions);
-
+                        
             // display stats
             gui._instance.StatsScreenCanvas.SetActive(true);
 
@@ -262,6 +256,8 @@ namespace Managers
                 currentCategory.level++;
                 PlayerPrefmanager.SetCategoryLevel(currentCategory, currentCategory.level);
 
+                Debug.Log(PlayerPrefmanager.GetCategoryLevel(currentCategory));
+
                 //TODO: go to next level
 
             }
@@ -269,6 +265,12 @@ namespace Managers
             {
                 //TODO: replay level
             }
+
+            // reset question stats
+            answersGiven = 0;
+            totalCorrectAnswers = 0;
+
+            gui._instance.UpdateAnswersScore(totalCorrectAnswers, totalQuestions);
         }
 
         /// <summary>
@@ -349,10 +351,12 @@ namespace Managers
 
             gui._instance.UpdateAnswersScore(totalCorrectAnswers, totalQuestions);
 
+            onWrongAnswer();
+
             // go to next question if question set is not over
             if (answersGiven < totalQuestions)
             {
-                SelectRandomQuestion(gm._instance.currentDifficulty);
+                SelectRandomQuestion(currentDifficulty);
             }
 
         }
@@ -383,7 +387,7 @@ namespace Managers
             gui._instance.ResetButtonColors();
 
             // load next question
-            SelectRandomQuestion(gm._instance.currentDifficulty);
+            SelectRandomQuestion(currentDifficulty);
         }
 
         /// <summary>

@@ -8,7 +8,7 @@ public class PlayerProfile
 
     public int level;
 
-    public int lifes;
+    public int lives;    
 
     public int historyLevel;
 

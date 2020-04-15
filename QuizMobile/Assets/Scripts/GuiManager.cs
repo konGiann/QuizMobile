@@ -17,7 +17,8 @@ namespace Managers
         public Text TimeText;
         public Image QuestionImage;
         public Image TotalQuetionsFiller;
-        public Text Lifes;
+        public Text categoryLevel;
+        public GameObject[] livesIndicator;
         public GameObject StatsScreenCanvas;
 
         public Button[] Answers;
@@ -34,7 +35,13 @@ namespace Managers
             TotalAnswersScore.text = "/0";
             PlayerScore.text = PlayerPrefmanager.GetScore().ToString();
             TopScore.text = PlayerPrefmanager.GetHighScore().ToString();
-            Lifes.text = GameManager._instance.player.lifes.ToString();
+            
+            //Lifes.text = GameManager._instance.player.lives.ToString();
+        }
+
+        private void Start()
+        {
+            UpdateCategoryLevelText();
         }
 
         public void ResetButtonColors()
@@ -60,7 +67,23 @@ namespace Managers
 
         public void UpdatePlayerLifes(int lifes)
         {
-            Lifes.text = lifes.ToString();
+            //Lifes.text = lifes.ToString();
+            for (int i = 0; i < livesIndicator.Length; i++)
+            {
+                if(i <= GameManager._instance.player.lives - 1)
+                {
+                    livesIndicator[i].SetActive(true);
+                }
+                else
+                {
+                    livesIndicator[i].SetActive(false);
+                }
+            }
+        }
+
+        public void UpdateCategoryLevelText()
+        {
+            categoryLevel.text = PlayerPrefmanager.GetCategoryLevel(qm._instance.currentCategory.categoryName).ToString();
         }
     }
 }

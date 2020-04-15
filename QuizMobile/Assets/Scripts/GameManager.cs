@@ -21,7 +21,7 @@ namespace Managers
 
         [Header("Game Info")]
         public int highScore;
-        public int lifes;
+        public int lives;
 
         public QuestionDifficulty currentDifficulty;
 
@@ -96,8 +96,8 @@ namespace Managers
         private void RetryQuestionSet()
         {
             TimeManager.timerIsPaused = false;
-            player.lifes = lifes;
-            gui._instance.UpdatePlayerLifes(player.lifes);
+            player.lives = lives;
+            gui._instance.UpdatePlayerLifes(player.lives);
             qm._instance.SelectRandomQuestion(qm._instance.currentDifficulty);
         }
 
@@ -129,33 +129,11 @@ namespace Managers
             Time.timeScale = 1;
             currentState = GameState.Running;
         }
-     
-        /// <summary>
-        /// Check game difficulty based on player level
-        /// we use that to assign the proper question set based on difficulty in the QuestionManager
-        /// </summary>
-        //private void CheckDifficulty()
-        //{
-        //    if (player.level <= 5)
-        //    {
-        //        currentDifficulty = QuestionDifficulty.EASY;
-        //    }
-        //    else if (player.level > 5 && player.level <= 10)
-        //    {
-        //        currentDifficulty = QuestionDifficulty.NORMAL;
-        //    }
-        //    else
-        //    {
-        //        currentDifficulty = QuestionDifficulty.HARD;
-        //    }
-        //}
-
         
-
         private void ReduceLifes()
         {
-            player.lifes--;
-            gui._instance.UpdatePlayerLifes(player.lifes);            
+            player.lives--;
+            gui._instance.UpdatePlayerLifes(player.lives);            
         }
         
         private void IncreaseScore()
@@ -191,7 +169,7 @@ namespace Managers
             player.level = 1;
             //highScore = PlayerPrefmanager.GetHighScore();
 
-            player.lifes = lifes;
+            player.lives = lives;
         }
     }
 
