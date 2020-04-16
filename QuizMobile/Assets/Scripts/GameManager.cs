@@ -138,7 +138,7 @@ namespace Managers
         
         private void IncreaseScore()
         {
-            switch (currentDifficulty)
+            switch (qm._instance.currentDifficulty)
             {
                 case QuestionDifficulty.EASY:
                     player.score += 10;

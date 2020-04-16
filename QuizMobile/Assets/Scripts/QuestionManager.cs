@@ -164,6 +164,7 @@ namespace Managers
             {
                 case "Religion":
                    currentCategory = religion;
+                    currentCategory.level = PlayerPrefmanager.GetCategoryLevel(currentCategory.categoryName);
                     break;
                 default:
                     break;
@@ -256,7 +257,7 @@ namespace Managers
                 currentCategory.level++;
                 PlayerPrefmanager.SetCategoryLevel(currentCategory, currentCategory.level);
 
-                Debug.Log(PlayerPrefmanager.GetCategoryLevel(currentCategory));
+                gui._instance.UpdateCategoryLevelText();
 
                 //TODO: go to next level
 
