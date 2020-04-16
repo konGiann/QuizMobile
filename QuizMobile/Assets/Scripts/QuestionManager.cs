@@ -7,6 +7,7 @@ using UnityEngine.UI;
 using gm = Managers.GameManager;
 using gui = Managers.GuiManager;
 using sm = Managers.SoundManager;
+using menu = Managers.MenuManager;
 
 namespace Managers
 {
@@ -15,24 +16,32 @@ namespace Managers
         public static QuestionManager _instance;
 
         #region inspector fields
-
-        [Header("Religion Questions")]
-        public QuestionList religionQuestions;
-
-        [Header("Culture Questions")]
-        public QuestionList cultureQuestions;
-
-        [Header("Nature Questions")]
-        public QuestionList natureQuestions;
-
-        [Header("COVID Questions")]
-        public QuestionList covidQuestions;
-
+     
         [Header("User selected Questions")]
         public List<Question> selectedQuestions;
 
-        public GameObject StatsCanvas;
+        [Header("Religion")]
+        public Category religion;
 
+        [Header("Culture")]
+        public Category culture;
+
+        [Header("Nature")]
+        public Category nature;
+
+        [Header("Covid")]
+        public Category covid;
+
+        [Header("History")]
+        public Category history;
+
+        [Header("Geography")]
+        public Category geography;
+
+        public Category currentCategory;
+
+        public QuestionDifficulty currentDifficulty;
+        
         // temp public
         public List<Question>  questionPool;
         
@@ -41,6 +50,8 @@ namespace Managers
         public int totalQuestions;
 
         public int answersGiven;
+
+        public int answersNeededToPassLevel;
 
         #endregion
 
@@ -94,62 +105,87 @@ namespace Managers
         /// and load the appropriate questions based on the difficulty
         /// </summary>
         /// <param name="selectedCategory"></param>
-        public void SetSelectedCategory(string selectedCategory, QuestionDifficulty diff)
+        //public void SetSelectedCategory(string selectedCategory, QuestionDifficulty diff)
+        //{
+        //    switch (selectedCategory)
+        //    {
+        //        case "Religion":
+
+        //            selectedQuestions = religionQuestions.questionList.ToList();
+        //            questionPool = selectedQuestions.Where(x => x.Difficulty == diff).ToList();
+        //            defaultCategorySprite = gm._instance.religionImage;
+
+        //            break;
+        //        case "Culture":
+        //            if (selectedQuestions == null || selectedQuestions.Count == 0)
+        //            {
+        //                selectedQuestions = cultureQuestions.questionList.ToList();
+        //                questionPool = selectedQuestions.Where(x => x.Difficulty == diff).ToList();
+        //                defaultCategorySprite = gm._instance.cultureImage;
+        //            }
+        //            break;
+        //        case "Nature":
+        //            if (selectedQuestions == null || selectedQuestions.Count == 0)
+        //            {
+        //                selectedQuestions = natureQuestions.questionList.ToList();
+        //                questionPool = selectedQuestions.Where(x => x.Difficulty == diff).ToList();
+        //                defaultCategorySprite = gm._instance.natureImage;
+        //            }
+        //            break;
+        //        case "COVID-19":
+        //            if (selectedQuestions == null || selectedQuestions.Count == 0)
+        //            {
+        //                selectedQuestions = covidQuestions.questionList.ToList();
+        //                questionPool = selectedQuestions.Where(x => x.Difficulty == diff).ToList();
+        //                defaultCategorySprite = gm._instance.covidImage;
+        //            }
+        //            break;
+
+        //        default:
+        //            break;
+        //    }
+        //}
+
+
+        public void SetSelectedCategory()
         {
-            switch (selectedCategory)
+            LoadCategory();          
+            if(currentCategory == religion)
+            {
+                selectedQuestions = religion.questions.questionList.ToList();
+                questionPool = selectedQuestions.Where(x => x.Difficulty == currentDifficulty).ToList();
+                defaultCategorySprite = gm._instance.religionImage;
+            }            
+        }
+
+        public void LoadCategory()
+        {
+            switch (menu._instance.selectedCategory)
             {
                 case "Religion":
-
-                    selectedQuestions = religionQuestions.questionList.ToList();
-                    questionPool = selectedQuestions.Where(x => x.Difficulty == diff).ToList();
-                    defaultCategorySprite = gm._instance.religionImage;
-
+                   currentCategory = religion;
+                    currentCategory.level = PlayerPrefmanager.GetCategoryLevel(currentCategory.categoryName);
                     break;
-                case "Culture":
-                    if (selectedQuestions == null || selectedQuestions.Count == 0)
-                    {
-                        selectedQuestions = cultureQuestions.questionList.ToList();
-                        questionPool = selectedQuestions.Where(x => x.Difficulty == diff).ToList();
-                        defaultCategorySprite = gm._instance.cultureImage;
-                    }
-                    break;
-                case "Nature":
-                    if (selectedQuestions == null || selectedQuestions.Count == 0)
-                    {
-                        selectedQuestions = natureQuestions.questionList.ToList();
-                        questionPool = selectedQuestions.Where(x => x.Difficulty == diff).ToList();
-                        defaultCategorySprite = gm._instance.natureImage;
-                    }
-                    break;
-                case "COVID-19":
-                    if (selectedQuestions == null || selectedQuestions.Count == 0)
-                    {
-                        selectedQuestions = covidQuestions.questionList.ToList();
-                        questionPool = selectedQuestions.Where(x => x.Difficulty == diff).ToList();
-                        defaultCategorySprite = gm._instance.covidImage;
-                    }
-                    break;
-
                 default:
                     break;
             }
+            currentDifficulty = currentCategory.CalculateDifficulty();
         }
 
-        
         /// <summary>
         /// Select a random question from the set question list based on the game difficulty
         /// </summary>
         /// <param name="diff">The set game difficulty</param>
         public void SelectRandomQuestion(QuestionDifficulty diff)
-        {            
-            StatsCanvas.SetActive(false);            
+        {
+            gui._instance.StatsScreenCanvas.SetActive(false);
             
             // check the total questions of the level
-            TotalQuestionsToAnswer();
+            CalculateAnswersStats();
             
-            // if we can provide questions choose one
-            // else end question set
-            if (answersGiven < totalQuestions)
+            // if there are still questions to be answered and player has lifes, choose one question
+            // else end question set and show results
+            if (answersGiven < totalQuestions && gm._instance.player.lives > 0)
             {
                 if (questionPool.Count() < (totalQuestions - answersGiven))
                 {                                      
@@ -211,15 +247,31 @@ namespace Managers
         {
             // stop timer
             TimeManager.timerIsPaused = true;
+                        
+            // display stats
+            gui._instance.StatsScreenCanvas.SetActive(true);
+
+            if(totalCorrectAnswers >= answersNeededToPassLevel)
+            {
+                // increase and save category level
+                currentCategory.level++;
+                PlayerPrefmanager.SetCategoryLevel(currentCategory, currentCategory.level);
+
+                gui._instance.UpdateCategoryLevelText();
+
+                //TODO: go to next level
+
+            }
+            else
+            {
+                //TODO: replay level
+            }
 
             // reset question stats
             answersGiven = 0;
             totalCorrectAnswers = 0;
 
             gui._instance.UpdateAnswersScore(totalCorrectAnswers, totalQuestions);
-
-            // display stats
-            StatsCanvas.SetActive(true);
         }
 
         /// <summary>
@@ -264,8 +316,7 @@ namespace Managers
                     PlayerPrefmanager.SetHighScore(gm._instance.highScore);
                 }
 
-                onCorrectAnswer();
-                // PlayerPrefmanager.SetScore(totalCorrectAnswers);
+                onCorrectAnswer();                
             }
 
             else // wrong
@@ -279,8 +330,9 @@ namespace Managers
             }            
 
             gui._instance.UpdateAnswersScore(totalCorrectAnswers, totalQuestions);
-                        
-            StartCoroutine(GotoNextQuestionWithDelay(tm.nextQuestionDelay));
+
+
+            StartCoroutine(GotoNextQuestionWithDelay(tm.nextQuestionDelay));                       
         }
 
         /// <summary>
@@ -300,10 +352,12 @@ namespace Managers
 
             gui._instance.UpdateAnswersScore(totalCorrectAnswers, totalQuestions);
 
+            onWrongAnswer();
+
             // go to next question if question set is not over
             if (answersGiven < totalQuestions)
             {
-                SelectRandomQuestion(gm._instance.currentDifficulty);
+                SelectRandomQuestion(currentDifficulty);
             }
 
         }
@@ -334,48 +388,72 @@ namespace Managers
             gui._instance.ResetButtonColors();
 
             // load next question
-            SelectRandomQuestion(gm._instance.currentDifficulty);
+            SelectRandomQuestion(currentDifficulty);
         }
 
         /// <summary>
         /// Checks how many questions will the question set have based on the player level
         /// </summary>
-        private void TotalQuestionsToAnswer()
+        private void CalculateAnswersStats()
         {
-            switch (gm._instance.player.level)
+            switch (currentCategory.level)
             {
                 case 1:
+                    totalQuestions = 8;
+                    answersNeededToPassLevel = 3;
+                    break;
                 case 2:
                     totalQuestions = 8;
+                    answersNeededToPassLevel = 4;
                     break;
                 case 3:
+                    totalQuestions = 10;
+                    answersNeededToPassLevel = 6;
+                    break;
                 case 4:
                     totalQuestions = 10;
-                    break;
+                    answersNeededToPassLevel = 7;
+                    break;                    
                 case 5:
+                    totalQuestions = 12;
+                    answersNeededToPassLevel = 8;
+                    break;
                 case 6:
                     totalQuestions = 12;
+                    answersNeededToPassLevel = 9;                    
                     break;
                 case 7:
                     totalQuestions = 14;
+                    answersNeededToPassLevel = 10;                    
                     break;
                 case 8:
+                    totalQuestions = 16;
+                    answersNeededToPassLevel = 11;
+                    break;
                 case 9:
                     totalQuestions = 16;
+                    answersNeededToPassLevel = 12;
                     break;
                 case 10:
                 case 11:
                     totalQuestions = 18;
+                    answersNeededToPassLevel = 13;
                     break;
                 case 12:
+                    totalQuestions = 20;
+                    answersNeededToPassLevel = 14;
+                    break;
                 case 13:
                     totalQuestions = 20;
+                    answersNeededToPassLevel = 15;
                     break;
                 case 14:
                     totalQuestions = 22;
+                    answersNeededToPassLevel = 16;
                     break;
                 case 15:
                     totalQuestions = 25;
+                    answersNeededToPassLevel = 20;
                     break;                                    
                 default:
                     break;

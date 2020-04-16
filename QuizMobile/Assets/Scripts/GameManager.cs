@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 using gui = Managers.GuiManager;
 using menu = Managers.MenuManager;
@@ -20,6 +21,7 @@ namespace Managers
 
         [Header("Game Info")]
         public int highScore;
+        public int lives;
 
         public QuestionDifficulty currentDifficulty;
 
@@ -51,12 +53,8 @@ namespace Managers
         /// </summary>
         private void Init()
         {
-            // reset score and set highscore
-            PlayerPrefmanager.ResetStats();
-            highScore = PlayerPrefmanager.GetHighScore();
             
-            
-
+                                    
             #region events to look at
 
             // increase score on correct answer
@@ -66,33 +64,25 @@ namespace Managers
             qm._instance.onWrongAnswer += ReduceLifes;
 
             // start question set again on failure
-            DisplayStats.TrySameQuestionSetAgain += StartQuestionSet;
+            DisplayStats.TrySameQuestionSetAgain += RetryQuestionSet;
 
             #endregion
-
-            // init player
-            player = new PlayerProfile
-            {
-                level = 1,
-                score = 0
-            };
+            
+            // load player's statistics
+            LoadPlayerStats();
         }
 
         private void Start()
         {
-            CheckDifficulty();
+            //CheckDifficulty();
 
             // load question set of chosen category
-            qm._instance.SetSelectedCategory(menu._instance.selectedCategory, currentDifficulty);
-            Debug.Log("hi");
-            StartQuestionSet();
+            qm._instance.SetSelectedCategory();           
+            RetryQuestionSet();
         }
         
         private void Update()
-        {
-            //CheckGameState();
-            CheckDifficulty();
-
+        {        
             // check for ESC key to pause game
             if (Input.GetKeyDown(KeyCode.Escape))
             {
@@ -103,10 +93,12 @@ namespace Managers
         /// <summary>
         /// start question set based on difficulty
         /// </summary>
-        private void StartQuestionSet()
+        private void RetryQuestionSet()
         {
             TimeManager.timerIsPaused = false;
-            qm._instance.SelectRandomQuestion(currentDifficulty);
+            player.lives = lives;
+            gui._instance.UpdatePlayerLifes(player.lives);
+            qm._instance.SelectRandomQuestion(qm._instance.currentDifficulty);
         }
 
         //private void CheckGameState()
@@ -137,35 +129,16 @@ namespace Managers
             Time.timeScale = 1;
             currentState = GameState.Running;
         }
-     
-        /// <summary>
-        /// Check game difficulty based on player level
-        /// we use that to assign the proper question set based on difficulty in the QuestionManager
-        /// </summary>
-        private void CheckDifficulty()
-        {
-            if (player.level <= 5)
-            {
-                currentDifficulty = QuestionDifficulty.EASY;
-            }
-            else if (player.level > 5 && player.level <= 10)
-            {
-                currentDifficulty = QuestionDifficulty.NORMAL;
-            }
-            else
-            {
-                currentDifficulty = QuestionDifficulty.HARD;
-            }
-        }
-
+        
         private void ReduceLifes()
         {
-            //
+            player.lives--;
+            gui._instance.UpdatePlayerLifes(player.lives);            
         }
         
-        void IncreaseScore()
+        private void IncreaseScore()
         {
-            switch (currentDifficulty)
+            switch (qm._instance.currentDifficulty)
             {
                 case QuestionDifficulty.EASY:
                     player.score += 10;
@@ -182,6 +155,21 @@ namespace Managers
                 default:
                     break;
             }
+            PlayerPrefmanager.SetScore(player.score);
+
+        }
+
+        private void LoadPlayerStats()
+        {
+            // init player
+            player = new PlayerProfile();
+
+            player.score = PlayerPrefmanager.GetScore();
+
+            player.level = 1;
+            //highScore = PlayerPrefmanager.GetHighScore();
+
+            player.lives = lives;
         }
     }
 

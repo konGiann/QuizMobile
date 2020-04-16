@@ -8,7 +8,18 @@ public class PlayerProfile
 
     public int level;
 
-    public int lifes;
+    public int lives;    
 
-    public List<int> categoriesLevel;
+    public int historyLevel;
+
+    public int cultureLevel;
+
+    public int natureLevel;
+
+    public int covidLevel;
+
+    public int geographyLevel;
+
+    public int religionLevel;
+    
 }

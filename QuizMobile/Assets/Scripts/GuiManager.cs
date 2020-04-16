@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using qm = Managers.QuestionManager;
 
 namespace Managers
 {
@@ -15,6 +16,11 @@ namespace Managers
         public Text TopScore;
         public Text TimeText;
         public Image QuestionImage;
+        public Image TotalQuetionsFiller;
+        public Text categoryLevel;
+        public GameObject[] livesIndicator;
+        public GameObject StatsScreenCanvas;
+
         public Button[] Answers;
 
         private void Awake()
@@ -23,18 +29,19 @@ namespace Managers
             {
                 _instance = this;
             }
-
-            //else if (_instance != null)
-            //{
-            //    Destroy(gameObject);
-            //}
-
-            //DontDestroyOnLoad(gameObject);
-
+         
             // initialize score values
             CorrectAnswersScore.text = "0";
             TotalAnswersScore.text = "/0";
+            PlayerScore.text = PlayerPrefmanager.GetScore().ToString();
             TopScore.text = PlayerPrefmanager.GetHighScore().ToString();
+            
+            //Lifes.text = GameManager._instance.player.lives.ToString();
+        }
+
+        private void Start()
+        {
+            UpdateCategoryLevelText();
         }
 
         public void ResetButtonColors()
@@ -49,11 +56,34 @@ namespace Managers
         {
             CorrectAnswersScore.text = totalCorrectAnswers.ToString();
             TotalAnswersScore.text = "/" + totalQuestions.ToString();
+            
+            TotalQuetionsFiller.fillAmount = (float)qm._instance.answersGiven / (float)qm._instance.totalQuestions;
         }
 
         public void UpdatePlayerScore(int score)
         {
             PlayerScore.text = score.ToString();
+        }
+
+        public void UpdatePlayerLifes(int lifes)
+        {
+            //Lifes.text = lifes.ToString();
+            for (int i = 0; i < livesIndicator.Length; i++)
+            {
+                if(i <= GameManager._instance.player.lives - 1)
+                {
+                    livesIndicator[i].SetActive(true);
+                }
+                else
+                {
+                    livesIndicator[i].SetActive(false);
+                }
+            }
+        }
+
+        public void UpdateCategoryLevelText()
+        {
+            categoryLevel.text = PlayerPrefmanager.GetCategoryLevel(qm._instance.currentCategory.categoryName).ToString();
         }
     }
 }
