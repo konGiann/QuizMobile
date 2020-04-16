@@ -17,7 +17,7 @@ MonoBehaviour:
       \u0394\u0395\u039A\u0391\u0395\u03A4\u0399\u0391 \u03A4\u039F\u03A5 1830 \u03A9\u03A3
       \u03A6\u0391\u03A1\u039C\u0391\u039A\u039F"
     Image: {fileID: 0}
-    Difficulty: 1
+    Difficulty: 6
     Answers:
     - text: "\u039A\u0395\u03A4\u03A3\u0391\u03A0"
       isCorrect: 1
@@ -34,9 +34,9 @@ MonoBehaviour:
   - Text: "\u03A0\u039F\u0399\u039F \u0396\u03A9\u039F \u03A6\u0399\u039B\u039F\u03A5\u03A3\u0391\u039D
       \u03A4\u039F\u039D \u039C\u0395\u03A3\u0391\u0399\u03A9\u039D\u0391 \u03A9\u03A3
       \u03A6\u0391\u03A1\u039C\u0391\u039A\u039F \u0393\u0399\u0391 \u03A4\u039F\u039D
-      \u03A0\u039F\u039D\u039F\u0394\u039F\u039D\u03A4\u039F"
+      \u03A0\u039F\u039D\u039F\u0394\u039F\u039D\u03A4\u039F?"
     Image: {fileID: 0}
-    Difficulty: 1
+    Difficulty: 6
     Answers:
     - text: "\u0391\u03A3\u0392\u039F"
       isCorrect: 0
