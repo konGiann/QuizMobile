@@ -77,7 +77,7 @@ namespace Managers
             //CheckDifficulty();
 
             // load question set of chosen category
-            qm._instance.SetSelectedCategory();           
+            qm._instance.LoadCategory();           
             RetryQuestionSet();
         }
         

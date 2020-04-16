@@ -147,24 +147,65 @@ namespace Managers
         //}
 
 
-        public void SetSelectedCategory()
-        {
-            LoadCategory();          
-            if(currentCategory == religion)
-            {
-                selectedQuestions = religion.questions.questionList.ToList();
-                questionPool = selectedQuestions.Where(x => x.Difficulty == currentDifficulty).ToList();
-                defaultCategorySprite = gm._instance.religionImage;
-            }            
-        }
+        //public void SetSelectedCategory()
+        //{
+        //    LoadCategory();          
+        //    if(currentCategory == religion)
+        //    {
+        //        selectedQuestions = religion.questions.questionList.ToList();
+        //        questionPool = selectedQuestions.Where(x => x.Difficulty == currentDifficulty).ToList();
+        //        defaultCategorySprite = gm._instance.religionImage;
+        //    }            
+        //}
 
         public void LoadCategory()
         {
             switch (menu._instance.selectedCategory)
             {
                 case "Religion":
-                   currentCategory = religion;
+                    currentCategory = religion;
                     currentCategory.level = PlayerPrefmanager.GetCategoryLevel(currentCategory.categoryName);
+                    selectedQuestions = religion.questions.questionList.ToList();
+                    questionPool = selectedQuestions.Where(x => x.Difficulty == currentDifficulty).ToList();
+                    defaultCategorySprite = gm._instance.religionImage;
+                    break;
+                case "Culture":
+                    currentCategory = culture;
+                    currentCategory.level = PlayerPrefmanager.GetCategoryLevel(currentCategory.categoryName);
+                    selectedQuestions = culture.questions.questionList.ToList();
+                    questionPool = selectedQuestions.Where(x => x.Difficulty == currentDifficulty).ToList();
+                    defaultCategorySprite = gm._instance.cultureImage;
+                    break;
+                case "Nature":
+                    currentCategory = nature;
+                    currentCategory.level = PlayerPrefmanager.GetCategoryLevel(currentCategory.categoryName);
+                    selectedQuestions = nature.questions.questionList.ToList();
+                    questionPool = selectedQuestions.Where(x => x.Difficulty == currentDifficulty).ToList();
+                    defaultCategorySprite = gm._instance.natureImage;
+                    break;
+                case "History":
+                    currentCategory = history;
+                    currentCategory.level = PlayerPrefmanager.GetCategoryLevel(currentCategory.categoryName);
+                    selectedQuestions = history.questions.questionList.ToList();
+                    questionPool = selectedQuestions.Where(x => x.Difficulty == currentDifficulty).ToList();
+
+                    //TODO: Find history image
+                    defaultCategorySprite = gm._instance.defaultCategorySprite;
+                    break;
+                case "COVID-19":
+                    currentCategory = covid;
+                    currentCategory.level = PlayerPrefmanager.GetCategoryLevel(currentCategory.categoryName);
+                    selectedQuestions = covid.questions.questionList.ToList();
+                    questionPool = selectedQuestions.Where(x => x.Difficulty == currentDifficulty).ToList();
+                    defaultCategorySprite = gm._instance.covidImage;
+                    break;
+                case "Geography":
+                    currentCategory = geography;
+                    currentCategory.level = PlayerPrefmanager.GetCategoryLevel(currentCategory.categoryName);
+                    selectedQuestions = geography.questions.questionList.ToList();
+                    questionPool = selectedQuestions.Where(x => x.Difficulty == currentDifficulty).ToList();
+                    //TODO: Find history image
+                    defaultCategorySprite = gm._instance.defaultCategorySprite;
                     break;
                 default:
                     break;
