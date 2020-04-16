@@ -396,7 +396,7 @@ namespace Managers
         /// </summary>
         private void CalculateAnswersStats()
         {
-            switch (gm._instance.player.level)
+            switch (currentCategory.level)
             {
                 case 1:
                     totalQuestions = 8;
@@ -419,7 +419,7 @@ namespace Managers
                     answersNeededToPassLevel = 8;
                     break;
                 case 6:
-                    totalQuestions = 10;
+                    totalQuestions = 12;
                     answersNeededToPassLevel = 9;                    
                     break;
                 case 7:
