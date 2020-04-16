@@ -107,3 +107,37 @@ MonoBehaviour:
       isCorrect: 0
     - text: 
       isCorrect: 0
+  - Text: "\u03A0\u039F\u03A4\u0395 \u03A0\u03A1\u039F\u0392\u039B\u0397\u0398\u0397\u039A\u0395
+      \u0397 \u03A0\u03A1\u03A9\u03A4\u0397 \u03A4\u03A1\u0399\u03A3\u0394\u0399\u0391\u03A3\u03A4\u0391\u03A4\u0397
+      \u03A4\u0391\u0399\u039D\u0399\u0391?"
+    Image: {fileID: 0}
+    Difficulty: 1
+    Answers:
+    - text: 1993
+      isCorrect: 0
+    - text: 1983
+      isCorrect: 0
+    - text: 1922
+      isCorrect: 1
+    - text: 1946
+      isCorrect: 0
+    - text: 
+      isCorrect: 0
+    - text: 
+      isCorrect: 0
+  - Text: "\u039D\u03AD\u03B1 \u03B5\u03C1\u03CE\u03C4\u03B7\u03C3\u03B7"
+    Image: {fileID: 0}
+    Difficulty: 1
+    Answers:
+    - text: "\u03A0\u03C1\u03CE\u03C4\u03B7 \u03B1\u03C0\u03AC\u03BD\u03C4\u03B7\u03C3\u03B7"
+      isCorrect: 0
+    - text: "\u0394\u03B5\u03CD\u03C4\u03B5\u03C1\u03B7 \u03B1\u03C0\u03AC\u03BD\u03C4\u03B7\u03C3\u03B7"
+      isCorrect: 0
+    - text: "\u03A4\u03C1\u03AF\u03C4\u03B7 \u03B1\u03C0\u03AC\u03BD\u03C4\u03B7\u03C3\u03B7"
+      isCorrect: 0
+    - text: "\u03A4\u03AD\u03C4\u03B1\u03C1\u03C4\u03B7 \u03B1\u03C0\u03AC\u03BD\u03C4\u03B7\u03C3\u03B7"
+      isCorrect: 0
+    - text: 
+      isCorrect: 0
+    - text: 
+      isCorrect: 0

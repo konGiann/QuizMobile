@@ -193,3 +193,22 @@ MonoBehaviour:
       isCorrect: 0
     - text: 
       isCorrect: 0
+  - Text: "\u03A3\u0395 \u03A0\u039F\u0399\u0391 \u03A7\u03A9\u03A1\u0391 \u039C\u0395\u03A7\u03A1\u0399
+      \u03A4\u039F 2015 \u0397\u03A4\u0391\u039D \u03A0\u0391\u03A1\u0391\u039C\u039F\u039D\u039F
+      \u039D\u0391 \u03A7\u039F\u03A1\u0395\u03A5\u0395\u0399\u03A3 \u039C\u0395\u03A4\u0391
+      \u03A4\u0391 \u039C\u0395\u03A3\u0391\u039D\u03A5\u03A7\u03A4\u0391?"
+    Image: {fileID: 0}
+    Difficulty: 6
+    Answers:
+    - text: "\u03A3\u03A1\u0399 \u039B\u0391\u039D\u039A\u0391"
+      isCorrect: 0
+    - text: "\u039A\u0399\u03A1\u0393\u0399\u03A3\u03A4\u0391\u039D"
+      isCorrect: 0
+    - text: "\u0399\u0391\u03A0\u03A9\u039D\u0399\u0391"
+      isCorrect: 1
+    - text: "\u03A1\u03A9\u03A3\u0399\u0391"
+      isCorrect: 0
+    - text: 
+      isCorrect: 0
+    - text: 
+      isCorrect: 0
