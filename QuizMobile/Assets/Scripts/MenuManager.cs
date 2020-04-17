@@ -13,6 +13,8 @@ namespace Managers
 
         public GameObject MenuPanel;
 
+        public Text playerName;
+
 
         #endregion
 
@@ -36,6 +38,7 @@ namespace Managers
             {
                 _instance = GetComponent<MenuManager>();
             }
+            playerName.text = PlayerPrefmanager.GetPlayerName();
         }
 
         private void Start()

@@ -394,7 +394,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 24.46, y: 3.4}
+  m_AnchoredPosition: {x: 24.46, y: -4.1}
   m_SizeDelta: {x: 208.92, y: 47.67}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &401405946
@@ -428,7 +428,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 
+  m_Text: dsadasdsa
 --- !u!222 &401405947
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -762,7 +762,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   LoadGameButton: {fileID: 2131370221}
   playerName: {fileID: 1840131894}
-  pNameText: {fileID: 0}
+  displayName: {fileID: 2146998324}
+  playerInput: {fileID: 247646208}
+  playerDisplay: {fileID: 401405946}
 --- !u!4 &1732161319
 Transform:
   m_ObjectHideFlags: 0
@@ -878,7 +880,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1840131895
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1219,7 +1221,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: -33, y: -68}
+  m_AnchoredPosition: {x: -84, y: -68}
   m_SizeDelta: {x: 188.3, y: 101.9}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!95 &1972633715
@@ -1434,7 +1436,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2146998324}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -30.67244, y: 34.1, z: -182.6875}
+  m_LocalPosition: {x: 38, y: 230, z: -182.6875}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 401405945}

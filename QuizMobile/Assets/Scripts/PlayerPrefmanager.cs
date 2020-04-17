@@ -90,9 +90,10 @@ namespace Managers
 
         #region resets
 
-        public static void ResetStats()
+        public static void ResetPlayer()
         {
             PlayerPrefs.SetInt("Score", 0);
+            PlayerPrefs.SetString("playerName", "");
         }
 
         public static void ResetAllCategoriesLevel()

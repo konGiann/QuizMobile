@@ -40,10 +40,10 @@ public class LoadingScreen : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Escape))
-        //{
-        //    SceneManager.LoadScene(1);
-        //}
+        if ((Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Escape) || Input.touchCount > 0) && !string.IsNullOrEmpty(PlayerPrefmanager.GetPlayerName()))
+        {
+            SceneManager.LoadScene(1);
+        }
     }
 
     public void SetName()
@@ -52,8 +52,11 @@ public class LoadingScreen : MonoBehaviour
     }
 
     public void LoadGame()
-    {        
-        SceneManager.LoadScene(1);        
+    {
+        if (!string.IsNullOrEmpty(playerInput.text))
+        {
+            SceneManager.LoadScene(1);         
+        }
     }
 
     IEnumerator ShowButton()

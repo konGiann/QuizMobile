@@ -510,6 +510,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MenuPanel: {fileID: 1969431577}
+  playerName: {fileID: 821199007}
   selectedCategory: 
   religionLevel: {fileID: 1051765285}
   cultureLevel: {fileID: 719222036}
