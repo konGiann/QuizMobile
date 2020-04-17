@@ -25,7 +25,8 @@ namespace Managers
         public int highScore;
         public int lives;        
 
-        public PlayerProfile player;                
+        public PlayerProfile player;
+        public bool isGamePaused;
 
         #endregion
 
@@ -73,10 +74,10 @@ namespace Managers
         private void Update()
         {        
             // check for ESC key to pause game
-            if (Input.GetKeyDown(KeyCode.Escape))
-            {
-                PauseGame();
-            }
+            //if (Input.GetKeyDown(KeyCode.Escape))
+            //{
+            //    PauseGame();
+            //}
         }
 
         /// <summary>
@@ -91,14 +92,19 @@ namespace Managers
             qm._instance.SelectRandomQuestion(qm._instance.currentDifficulty);
         }     
 
-        private void PauseGame()
+        public void PauseGame()
         {
-            Time.timeScale = 0;
-        }
-
-        private void ResumeGame()
-        {
-            Time.timeScale = 1;            
+            isGamePaused = !isGamePaused;
+            if (isGamePaused)
+            {
+                Time.timeScale = 0;
+                gui._instance.pauseMenu.SetActive(true);
+            }
+            else
+            {
+                Time.timeScale = 1;
+                gui._instance.pauseMenu.SetActive(false);
+            }
         }
         
         private void ReduceLifes()

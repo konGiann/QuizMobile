@@ -235,15 +235,11 @@ namespace Managers
         /// <summary>
         /// Stops current set of questions and timer and displays the results
         /// </summary>
-        private void QuestionSetEnded()
+        public void QuestionSetEnded()
         {
             // stop timer
             TimeManager.timerIsPaused = true;
-                        
-            // display stats
-            
-            
-
+                                                            
             // question set passed!
             if(totalCorrectAnswers >= answersNeededToPassLevel)
             {

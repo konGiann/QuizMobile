@@ -20,6 +20,7 @@ namespace Managers
         public Text categoryLevel;
         public GameObject[] livesIndicator;
         public Text categoryName;
+        public GameObject pauseMenu;
 
         [Header("Results canvas")]
         public GameObject StatsScreenCanvas;
