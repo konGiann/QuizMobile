@@ -112,7 +112,7 @@ namespace Managers
                 zeroStarsImage.SetActive(false);
                 oneStarImage.SetActive(false);
                 twoStarsImage.SetActive(false);
-                threeStarsImage.SetActive(true);
+                threeStarsImage.SetActive(true); 
             }            
         }
 

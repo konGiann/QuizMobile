@@ -19,6 +19,23 @@ namespace Managers
             PlayerPrefs.SetInt("Score", score);
         }
 
+        public static string GetPlayerName()
+        {
+            if (PlayerPrefs.HasKey("playerName"))
+            {
+                return PlayerPrefs.GetString("playerName");
+            }
+            else
+            {
+                return "";
+            }
+        }
+
+        public static void SetPlayerName(string playerName)
+        {
+            PlayerPrefs.SetString("playerName", playerName);
+        }
+
         public static int GetPlayerLevel()
         {
             if (PlayerPrefs.HasKey("PlayerLevel"))
