@@ -9,20 +9,33 @@ namespace Managers
         public static GuiManager _instance;
 
         // Inspector
+        [Header("Main Game")]
         public Text QuestionText;
         public Text CorrectAnswersScore;
         public Text TotalAnswersScore;
-        public Text PlayerScore;
-        public Text TopScore;
+        public Text PlayerScore;        
         public Text TimeText;
         public Image QuestionImage;
         public Image TotalQuetionsFiller;
         public Text categoryLevel;
         public GameObject[] livesIndicator;
-        public GameObject StatsScreenCanvas;
+        public Text categoryName;
 
-        public Text percent;
-        public Text percentNeeded;
+        [Header("Results canvas")]
+        public GameObject StatsScreenCanvas;
+        public Text percentText;
+        public Text percentNeededText;
+        public Text finalScore;
+        public float percent = 0f;
+        public float percentNeeded;
+        public GameObject winHeader;
+        public GameObject loseHeader;
+        public GameObject retryButton;
+        public GameObject nextLevelButton;
+        public GameObject zeroStarsImage;
+        public GameObject oneStarImage;
+        public GameObject twoStarsImage;
+        public GameObject threeStarsImage;
 
         public Button[] Answers;
 
@@ -36,15 +49,14 @@ namespace Managers
             // initialize score values
             CorrectAnswersScore.text = "0";
             TotalAnswersScore.text = "/0";
-            PlayerScore.text = PlayerPrefmanager.GetScore().ToString();
-            TopScore.text = PlayerPrefmanager.GetHighScore().ToString();
+            PlayerScore.text = PlayerPrefmanager.GetScore().ToString();            
             
             //Lifes.text = GameManager._instance.player.lives.ToString();
         }
 
         private void Start()
         {
-            UpdateCategoryLevelText();
+            UpdateCategoryText();
         }
 
         public void ResetButtonColors()
@@ -61,31 +73,46 @@ namespace Managers
             TotalAnswersScore.text = "/" + totalQuestions.ToString();
 
             // calculate stars
-            float p = (float)qm._instance.totalCorrectAnswers / qm._instance.answersGiven * 100;
-            float pNeeded = (float)qm._instance.answersNeededToPassLevel / qm._instance.totalQuestions * 100;
-            percent.text = p.ToString("n2");
-            percentNeeded.text = pNeeded.ToString("n2");
+            percent = (float)qm._instance.totalCorrectAnswers / qm._instance.answersGiven * 100;
+            percentNeeded = (float)qm._instance.answersNeededToPassLevel / qm._instance.totalQuestions * 100;
+            percentText.text = percent.ToString("n2");
+            percentNeededText.text = percentNeeded.ToString("n2");
 
-            if(p < pNeeded)
+            if(percent < percentNeeded)
             {
                 TotalQuetionsFiller.fillAmount = 0;
+                zeroStarsImage.SetActive(true);
+                oneStarImage.SetActive(false);
+                twoStarsImage.SetActive(false);
+                threeStarsImage.SetActive(false);
             }
             // one star
-            else if(p >= pNeeded && p <= 90)
+            else if(percent >= percentNeeded && percent <= 90)
             {
                 TotalQuetionsFiller.fillAmount = 0.4f;
+                zeroStarsImage.SetActive(false);
+                oneStarImage.SetActive(true);
+                twoStarsImage.SetActive(false);
+                threeStarsImage.SetActive(false);
             }
             // two stars
-            else if(p >= pNeeded && p > 90 && p < 100)
+            else if(percent >= percentNeeded && percent > 90 && percent < 100)
             {
                 TotalQuetionsFiller.fillAmount = 0.8f;
+                zeroStarsImage.SetActive(false);
+                oneStarImage.SetActive(false);
+                twoStarsImage.SetActive(true);
+                threeStarsImage.SetActive(false);
             }
             // 3 stars
             else
             {
                 TotalQuetionsFiller.fillAmount = 1;
-            }
-            //TotalQuetionsFiller.fillAmount = (float)qm._instance.totalCorrectAnswers / (float)qm._instance.totalQuestions;
+                zeroStarsImage.SetActive(false);
+                oneStarImage.SetActive(false);
+                twoStarsImage.SetActive(false);
+                threeStarsImage.SetActive(true);
+            }            
         }
 
         public void UpdatePlayerScore(int score)
@@ -109,9 +136,35 @@ namespace Managers
             }
         }
 
-        public void UpdateCategoryLevelText()
+        public void UpdateCategoryText()
         {
             categoryLevel.text = PlayerPrefmanager.GetCategoryLevel(qm._instance.currentCategory.categoryName).ToString();
+            categoryName.text = qm._instance.currentCategory.categoryName;
+        }
+
+        public void DisplayStats()
+        {
+            StatsScreenCanvas.SetActive(true);
+            finalScore.text = PlayerScore.text;
+            percentText.text = percent.ToString("n2") + "%";
+
+            if (qm._instance.passedLevel)
+            {
+                winHeader.SetActive(true);
+                loseHeader.SetActive(false);
+                retryButton.SetActive(false);
+                nextLevelButton.SetActive(true);
+
+                
+            }
+            else
+            {
+                loseHeader.SetActive(true);
+                winHeader.SetActive(false);
+                retryButton.SetActive(true);
+                nextLevelButton.SetActive(false);
+                zeroStarsImage.SetActive(true);
+            }
         }
     }
 }

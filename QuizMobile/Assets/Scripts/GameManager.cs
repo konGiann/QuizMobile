@@ -32,10 +32,7 @@ namespace Managers
         #region fields        
 
         [HideInInspector]
-        public Sprite defaultCategorySprite;
-
-        [HideInInspector]
-        public bool hasNewHighscore;
+        public Sprite defaultCategorySprite;   
 
         #endregion
 

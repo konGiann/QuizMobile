@@ -60,6 +60,8 @@ namespace Managers
         [HideInInspector]
         public bool isQuestionAnswered;
 
+        public bool passedLevel;
+
         private TimeManager tm;
 
         private Question currentQuestion;        
@@ -239,7 +241,8 @@ namespace Managers
             TimeManager.timerIsPaused = true;
                         
             // display stats
-            gui._instance.StatsScreenCanvas.SetActive(true);
+            
+            
 
             // question set passed!
             if(totalCorrectAnswers >= answersNeededToPassLevel)
@@ -248,22 +251,26 @@ namespace Managers
                 currentCategory.level++;
                 PlayerPrefmanager.SetCategoryLevel(currentCategory, currentCategory.level);
 
-                gui._instance.UpdateCategoryLevelText();
+                gui._instance.UpdateCategoryText();
 
                 //TODO: show canvas with go to next level button
+                passedLevel = true;
 
             }
             // question set failed
             else
             {
                 //TODO: show canvas with retry level button
+                passedLevel = false;
             }
+
+            gui._instance.DisplayStats();
 
             // reset question stats
             answersGiven = 0;
             totalCorrectAnswers = 0;
 
-            gui._instance.UpdateAnswersScore(totalCorrectAnswers, totalQuestions);
+            //gui._instance.UpdateAnswersScore(totalCorrectAnswers, totalQuestions);
         }
 
         /// <summary>
@@ -298,15 +305,6 @@ namespace Managers
                 sm._instance.audioController.PlayOneShot(sm._instance.CorrectAnswers[randomIndex]);
 
                 totalCorrectAnswers++;
-
-                // check highscore
-                if (totalCorrectAnswers >= gm._instance.highScore)
-                {
-                    gm._instance.hasNewHighscore = true;
-                    gm._instance.highScore = totalCorrectAnswers;
-                    gui._instance.TopScore.text = gm._instance.highScore.ToString();
-                    PlayerPrefmanager.SetHighScore(gm._instance.highScore);
-                }
 
                 OnCorrectAnswer();                
             }
