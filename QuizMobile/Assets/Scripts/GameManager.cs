@@ -92,25 +92,7 @@ namespace Managers
             gui._instance.UpdatePlayerLifes(player.lives);
             qm._instance.LoadCategory();
             qm._instance.SelectRandomQuestion(qm._instance.currentDifficulty);
-        }
-
-        //private void CheckGameState()
-        //{
-        //    switch (currentState)
-        //    {
-        //        case GameState.Running:
-
-        //            break;
-        //        case GameState.Paused:
-        //            PauseGame();
-        //            break;
-        //        case GameState.GameOver:
-        //            //LoadGameOverScreen();
-        //            break;
-        //        default:
-        //            break;
-        //    }
-        //}
+        }     
 
         private void PauseGame()
         {
@@ -152,16 +134,12 @@ namespace Managers
         }
 
         private void LoadPlayerStats()
-        {
-            // init player
+        {            
             player = new PlayerProfile();
 
             player.score = PlayerPrefmanager.GetScore();
 
-            player.level = 1;
-            //highScore = PlayerPrefmanager.GetHighScore();
-
-            player.lives = lives;
+            player.level = 1;                        
         }
     }  
 }

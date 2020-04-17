@@ -76,7 +76,6 @@ namespace Managers
 
         private void Awake()
         {
-
             Init();
         }
 
@@ -242,6 +241,7 @@ namespace Managers
             // display stats
             gui._instance.StatsScreenCanvas.SetActive(true);
 
+            // question set passed!
             if(totalCorrectAnswers >= answersNeededToPassLevel)
             {
                 // increase and save category level
@@ -253,6 +253,7 @@ namespace Managers
                 //TODO: show canvas with go to next level button
 
             }
+            // question set failed
             else
             {
                 //TODO: show canvas with retry level button
