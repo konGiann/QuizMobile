@@ -15,8 +15,8 @@ public class DisplayStats : MonoBehaviour
 
     private float percentage;
 
-    public delegate void OnCategoryRestart();
-    public static event OnCategoryRestart TrySameQuestionSetAgain;
+    public delegate void OnCategoryStart();
+    public static event OnCategoryStart StartQuestionsSet;
     
     void Awake()
     {
@@ -62,10 +62,8 @@ public class DisplayStats : MonoBehaviour
     }
 
     public void TryCategoryAgain()
-    {        
-        //SceneManager.LoadScene(2);        
-        gm._instance.currentState = GameState.Running;
-        TrySameQuestionSetAgain();
+    {                        
+        StartQuestionsSet();
     }
 
     public void QuitApp()

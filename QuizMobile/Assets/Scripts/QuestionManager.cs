@@ -68,8 +68,8 @@ namespace Managers
 
         #region delegates
         public delegate void OnAnswer();
-        public event OnAnswer onCorrectAnswer;
-        public event OnAnswer onWrongAnswer; 
+        public event OnAnswer OnCorrectAnswer;
+        public event OnAnswer OnWrongAnswer; 
         #endregion
 
         #endregion
@@ -101,63 +101,8 @@ namespace Managers
         }
 
         /// <summary>
-        /// Check for wich category this question set is about
-        /// and load the appropriate questions based on the difficulty
+        /// Assigns the current category, loads its level and then loads questions based on the difficulty
         /// </summary>
-        /// <param name="selectedCategory"></param>
-        //public void SetSelectedCategory(string selectedCategory, QuestionDifficulty diff)
-        //{
-        //    switch (selectedCategory)
-        //    {
-        //        case "Religion":
-
-        //            selectedQuestions = religionQuestions.questionList.ToList();
-        //            questionPool = selectedQuestions.Where(x => x.Difficulty == diff).ToList();
-        //            defaultCategorySprite = gm._instance.religionImage;
-
-        //            break;
-        //        case "Culture":
-        //            if (selectedQuestions == null || selectedQuestions.Count == 0)
-        //            {
-        //                selectedQuestions = cultureQuestions.questionList.ToList();
-        //                questionPool = selectedQuestions.Where(x => x.Difficulty == diff).ToList();
-        //                defaultCategorySprite = gm._instance.cultureImage;
-        //            }
-        //            break;
-        //        case "Nature":
-        //            if (selectedQuestions == null || selectedQuestions.Count == 0)
-        //            {
-        //                selectedQuestions = natureQuestions.questionList.ToList();
-        //                questionPool = selectedQuestions.Where(x => x.Difficulty == diff).ToList();
-        //                defaultCategorySprite = gm._instance.natureImage;
-        //            }
-        //            break;
-        //        case "COVID-19":
-        //            if (selectedQuestions == null || selectedQuestions.Count == 0)
-        //            {
-        //                selectedQuestions = covidQuestions.questionList.ToList();
-        //                questionPool = selectedQuestions.Where(x => x.Difficulty == diff).ToList();
-        //                defaultCategorySprite = gm._instance.covidImage;
-        //            }
-        //            break;
-
-        //        default:
-        //            break;
-        //    }
-        //}
-
-
-        //public void SetSelectedCategory()
-        //{
-        //    LoadCategory();          
-        //    if(currentCategory == religion)
-        //    {
-        //        selectedQuestions = religion.questions.questionList.ToList();
-        //        questionPool = selectedQuestions.Where(x => x.Difficulty == currentDifficulty).ToList();
-        //        defaultCategorySprite = gm._instance.religionImage;
-        //    }            
-        //}
-
         public void LoadCategory()
         {
             switch (menu._instance.selectedCategory)
@@ -165,6 +110,7 @@ namespace Managers
                 case "Religion":
                     currentCategory = religion;
                     currentCategory.level = PlayerPrefmanager.GetCategoryLevel(currentCategory.categoryName);
+                    currentDifficulty = currentCategory.CalculateDifficulty();
                     selectedQuestions = religion.questions.questionList.ToList();
                     questionPool = selectedQuestions.Where(x => x.Difficulty == currentDifficulty).ToList();
                     defaultCategorySprite = gm._instance.religionImage;
@@ -172,6 +118,7 @@ namespace Managers
                 case "Culture":
                     currentCategory = culture;
                     currentCategory.level = PlayerPrefmanager.GetCategoryLevel(currentCategory.categoryName);
+                    currentDifficulty = currentCategory.CalculateDifficulty();
                     selectedQuestions = culture.questions.questionList.ToList();
                     questionPool = selectedQuestions.Where(x => x.Difficulty == currentDifficulty).ToList();
                     defaultCategorySprite = gm._instance.cultureImage;
@@ -179,6 +126,7 @@ namespace Managers
                 case "Nature":
                     currentCategory = nature;
                     currentCategory.level = PlayerPrefmanager.GetCategoryLevel(currentCategory.categoryName);
+                    currentDifficulty = currentCategory.CalculateDifficulty();
                     selectedQuestions = nature.questions.questionList.ToList();
                     questionPool = selectedQuestions.Where(x => x.Difficulty == currentDifficulty).ToList();
                     defaultCategorySprite = gm._instance.natureImage;
@@ -186,6 +134,7 @@ namespace Managers
                 case "History":
                     currentCategory = history;
                     currentCategory.level = PlayerPrefmanager.GetCategoryLevel(currentCategory.categoryName);
+                    currentDifficulty = currentCategory.CalculateDifficulty();
                     selectedQuestions = history.questions.questionList.ToList();
                     questionPool = selectedQuestions.Where(x => x.Difficulty == currentDifficulty).ToList();
 
@@ -202,6 +151,7 @@ namespace Managers
                 case "Geography":
                     currentCategory = geography;
                     currentCategory.level = PlayerPrefmanager.GetCategoryLevel(currentCategory.categoryName);
+                    currentDifficulty = currentCategory.CalculateDifficulty();
                     selectedQuestions = geography.questions.questionList.ToList();
                     questionPool = selectedQuestions.Where(x => x.Difficulty == currentDifficulty).ToList();
                     //TODO: Find history image
@@ -210,11 +160,11 @@ namespace Managers
                 default:
                     break;
             }
-            currentDifficulty = currentCategory.CalculateDifficulty();
+            
         }
 
         /// <summary>
-        /// Select a random question from the set question list based on the game difficulty
+        /// Selects a random question from the set question list based on the game difficulty
         /// </summary>
         /// <param name="diff">The set game difficulty</param>
         public void SelectRandomQuestion(QuestionDifficulty diff)
@@ -282,7 +232,7 @@ namespace Managers
         }
 
         /// <summary>
-        /// Stops current set of questions and timer
+        /// Stops current set of questions and timer and displays the results
         /// </summary>
         private void QuestionSetEnded()
         {
@@ -300,12 +250,12 @@ namespace Managers
 
                 gui._instance.UpdateCategoryLevelText();
 
-                //TODO: go to next level
+                //TODO: show canvas with go to next level button
 
             }
             else
             {
-                //TODO: replay level
+                //TODO: show canvas with retry level button
             }
 
             // reset question stats
@@ -357,7 +307,7 @@ namespace Managers
                     PlayerPrefmanager.SetHighScore(gm._instance.highScore);
                 }
 
-                onCorrectAnswer();                
+                OnCorrectAnswer();                
             }
 
             else // wrong
@@ -367,7 +317,7 @@ namespace Managers
                 // play random effect
                 int randomIndex = UnityEngine.Random.Range(0, sm._instance.WrongAnswers.Length);
                 sm._instance.audioController.PlayOneShot(sm._instance.WrongAnswers[randomIndex]);
-                onWrongAnswer();
+                OnWrongAnswer();
             }            
 
             gui._instance.UpdateAnswersScore(totalCorrectAnswers, totalQuestions);
@@ -377,7 +327,7 @@ namespace Managers
         }
 
         /// <summary>
-        /// 
+        /// Automatically gives a wrong question when timers is ended without any user input
         /// </summary>
         private void LostDueToTimer()
         {
@@ -393,18 +343,17 @@ namespace Managers
 
             gui._instance.UpdateAnswersScore(totalCorrectAnswers, totalQuestions);
 
-            onWrongAnswer();
+            OnWrongAnswer();
 
             // go to next question if question set is not over
             if (answersGiven < totalQuestions)
             {
                 SelectRandomQuestion(currentDifficulty);
             }
-
         }
 
         /// <summary>
-        /// Loads next question after some seconds
+        /// Loads next question after some seconds after a user input
         /// </summary>
         /// <param name="delay">the delay in seconds</param>
         /// <returns></returns>
@@ -433,7 +382,7 @@ namespace Managers
         }
 
         /// <summary>
-        /// Checks how many questions will the question set have based on the player level
+        /// Checks how many questions will the question set have based on the category level
         /// </summary>
         private void CalculateAnswersStats()
         {

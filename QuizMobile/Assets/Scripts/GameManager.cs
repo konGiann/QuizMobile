@@ -18,16 +18,14 @@ namespace Managers
         public Sprite cultureImage;
         public Sprite natureImage;
         public Sprite covidImage;
+        public Sprite historyImage;
+        public Sprite geographyImage;
 
         [Header("Game Info")]
         public int highScore;
-        public int lives;
+        public int lives;        
 
-        public QuestionDifficulty currentDifficulty;
-
-        public PlayerProfile player;        
-
-        public GameState currentState;
+        public PlayerProfile player;                
 
         #endregion
 
@@ -52,19 +50,17 @@ namespace Managers
         /// Init fields and assign delegates
         /// </summary>
         private void Init()
-        {
-            
-                                    
+        {                                                
             #region events to look at
 
             // increase score on correct answer
-            qm._instance.onCorrectAnswer += IncreaseScore;
+            qm._instance.OnCorrectAnswer += IncreaseScore;
 
             // reduce player lifes on wrong answer
-            qm._instance.onWrongAnswer += ReduceLifes;
+            qm._instance.OnWrongAnswer += ReduceLifes;
 
             // start question set again on failure
-            DisplayStats.TrySameQuestionSetAgain += RetryQuestionSet;
+            DisplayStats.StartQuestionsSet += StartQuestionSet;
 
             #endregion
             
@@ -73,12 +69,8 @@ namespace Managers
         }
 
         private void Start()
-        {
-            //CheckDifficulty();
-
-            // load question set of chosen category
-            qm._instance.LoadCategory();           
-            RetryQuestionSet();
+        {                                
+            StartQuestionSet();
         }
         
         private void Update()
@@ -93,11 +85,12 @@ namespace Managers
         /// <summary>
         /// start question set based on difficulty
         /// </summary>
-        private void RetryQuestionSet()
+        private void StartQuestionSet()
         {
             TimeManager.timerIsPaused = false;
             player.lives = lives;
             gui._instance.UpdatePlayerLifes(player.lives);
+            qm._instance.LoadCategory();
             qm._instance.SelectRandomQuestion(qm._instance.currentDifficulty);
         }
 
@@ -126,8 +119,7 @@ namespace Managers
 
         private void ResumeGame()
         {
-            Time.timeScale = 1;
-            currentState = GameState.Running;
+            Time.timeScale = 1;            
         }
         
         private void ReduceLifes()
@@ -171,12 +163,5 @@ namespace Managers
 
             player.lives = lives;
         }
-    }
-
-    public enum GameState
-    {
-        Running,
-        Paused,
-        GameOver
-    }
+    }  
 }
