@@ -147,7 +147,7 @@ namespace Managers
         {
             StatsScreenCanvas.SetActive(true);
             finalScore.text = PlayerScore.text;
-            percentText.text = percent.ToString("n2") + "%";
+            percentText.text = percent.ToString("n1") + "%";
 
             if (qm._instance.passedLevel)
             {

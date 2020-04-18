@@ -9,6 +9,8 @@ public class Category : MonoBehaviour
 
     public QuestionList questions;
 
+    public StarRating starRating;
+
     public QuestionDifficulty CalculateDifficulty()
     {
         if (level <= 5)
@@ -24,4 +26,12 @@ public class Category : MonoBehaviour
             return QuestionDifficulty.HARD;
         }
     }
+}
+
+public enum StarRating
+{
+    Zero = 0,
+    One = 1, 
+    Two = 2,
+    Three = 3
 }
